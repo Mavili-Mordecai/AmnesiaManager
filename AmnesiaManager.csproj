@@ -1,0 +1,65 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>Icons\keys.ico</ApplicationIcon>
+    <Version>0.0.1</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Fonts\Inter\Inter-Black.ttf" />
+    <None Remove="Fonts\Inter\Inter-Bold.ttf" />
+    <None Remove="Fonts\Inter\Inter-Medium.ttf" />
+    <None Remove="Fonts\Inter\Inter-Regular.ttf" />
+    <None Remove="Fonts\Inter\Inter-Thin.ttf" />
+    <None Remove="Icons\close\white.png" />
+    <None Remove="Icons\keys.ico" />
+    <None Remove="Icons\keys.png" />
+    <None Remove="Icons\minimize\white.png" />
+    <None Remove="Icons\settings\black.png" />
+    <None Remove="Icons\settings\white.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DevExpressMvvm" Version="22.1.3" />
+    <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="PropertyChanging.Fody" Version="1.30.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Fonts\Inter\Inter-Black.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Fonts\Inter\Inter-Bold.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Fonts\Inter\Inter-Medium.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Fonts\Inter\Inter-Regular.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Fonts\Inter\Inter-Thin.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\close\white.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\keys.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\keys.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\minimize\white.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\settings\black.png" />
+    <Resource Include="Icons\settings\white.png" />
+  </ItemGroup>
+
+</Project>
