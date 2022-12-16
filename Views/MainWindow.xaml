@@ -21,7 +21,7 @@
                         IconSource="/Icons/keys.ico"
                         TrayLeftMouseDown="ToggleWindow">
             <tb:TaskbarIcon.ContextMenu>
-                <ContextMenu Style="{DynamicResource TaskbarContextMenu}">
+                <ContextMenu Style="{DynamicResource ContextMenu}">
                     <MenuItem Header="Закрыть"
                               Command="{Binding ExitCommand}"/>
                 </ContextMenu>
@@ -38,14 +38,13 @@
                     Padding="0"
                     ClipToBounds="True"
                     Canvas.Top="0">
-                <Grid>
+                <Grid Margin="15">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <Grid Grid.Row="0"
-                          Margin="15">
+                    <Grid Grid.Row="0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
@@ -53,13 +52,14 @@
 
                         <TextBlock Grid.Column="0" 
                                    Text="{Binding ApplicationName}"
-                                   FontSize="16"
-                                   VerticalAlignment="Center"
-                                   FontFamily="{StaticResource Inter}"/>
+                                   FontSize="32"
+                                   FontFamily="{StaticResource Dongle}"
+                                   VerticalAlignment="Center"/>
 
                         <Button Grid.Column="1"
                                 Style="{DynamicResource ButtonContent}"
-                                VerticalAlignment="Center">
+                                VerticalAlignment="Center"
+                                ToolTip="Open the Settings window">
                             <Image Width="20"
                                    Height="20"
                                    Source="{DynamicResource SettingsIcon}"/>
@@ -68,7 +68,7 @@
 
                     <Frame Grid.Row="1" 
                            NavigationUIVisibility="Hidden"
-                           Source="{Binding Path=CurrentPage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                           Content="{Binding Path=CurrentPage, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                 </Grid>
             </Border>
         </Canvas>

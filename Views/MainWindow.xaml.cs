@@ -68,10 +68,8 @@ namespace AmnesiaManager.Views
                 Topmost = false;
             });
         }
-        #endregion
 
-        #region Private Methods
-        private void ToggleWindow(object sender, RoutedEventArgs e)
+        public void ToggleWindow(object sender, RoutedEventArgs? e)
         {
             //if (IsAnimating) return;
             if (!IsVisible)

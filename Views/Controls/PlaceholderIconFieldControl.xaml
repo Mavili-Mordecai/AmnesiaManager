@@ -1,0 +1,72 @@
+﻿<UserControl x:Class="AmnesiaManager.Views.Controls.PlaceholderIconFieldControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:helpers="clr-namespace:AmnesiaManager.Helpers"
+             mc:Ignorable="d" 
+             Width="Auto"
+             x:Name="UserControl"
+             HorizontalContentAlignment="Stretch"
+             VerticalContentAlignment="Center"
+             FontSize="12"
+             FontFamily="{StaticResource Inter}"
+             Foreground="{DynamicResource TextColorBrush}">
+    <UserControl.Resources>
+        <helpers:ImageSourceToVisibilityConverter x:Key="ImageSourceToVisibilityConverter"/>
+    </UserControl.Resources>
+
+    <Border Background="{Binding ElementName=UserControl, Path=Background}"
+            CornerRadius="{Binding ElementName=UserControl, Path=CornerRadius}"
+            BorderThickness="1"
+            BorderBrush="{DynamicResource SecondaryColorBrush}"
+            Padding="20 8">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Image Source="{Binding ElementName=UserControl, Path=Icon.UriSource}"
+                   Width="16"
+                   Visibility="{Binding ElementName=UserControl, Path=Icon, Converter={StaticResource ImageSourceToVisibilityConverter}}"
+                   Height="16"
+                   Margin="0 0 15 0"/>
+
+            <Grid Grid.Column="1">
+                <TextBox Text="{Binding ElementName=UserControl, Path=Text, UpdateSourceTrigger=PropertyChanged}"
+                         x:Name="TextSource"
+                         Panel.ZIndex="2"
+                         HorizontalAlignment="Stretch"
+                         HorizontalContentAlignment="{Binding ElementName=UserControl, Path=HorizontalContentAlignment}"
+                         VerticalAlignment="{Binding ElementName=UserControl, Path=VerticalContentAlignment}"
+                         Background="Transparent"
+                         Width="Auto"
+                         BorderThickness="0"
+                         Foreground="{Binding ElementName=UserControl, Path=Foreground}"
+                         CaretBrush="{Binding ElementName=UserControl, Path=Foreground}"
+                         FontSize="{Binding ElementName=UserControl, Path=FontSize}"
+                         FontFamily="{Binding ElementName=UserControl, Path=FontFamily}"
+                         MaxLength="{Binding ElementName=UserControl, Path=MaxLength}"/>
+
+                <TextBlock Text="{Binding ElementName=UserControl, Path=Placeholder, UpdateSourceTrigger=PropertyChanged}"
+                           Panel.ZIndex="1"
+                           VerticalAlignment="{Binding ElementName=UserControl, Path=VerticalContentAlignment}"
+                           HorizontalAlignment="{Binding ElementName=UserControl, Path=HorizontalContentAlignment}"
+                           FontSize="{Binding ElementName=UserControl, Path=FontSize}"
+                           FontFamily="{StaticResource Inter}">
+                    <TextBlock.Style>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="Foreground" Value="Transparent"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path=Text, Source={x:Reference TextSource}}" Value="">
+                                    <Setter Property="Foreground" Value="{Binding Path=Foreground, Source={x:Reference TextSource}}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>

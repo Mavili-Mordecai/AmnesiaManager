@@ -10,15 +10,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Fonts\Dongle\Dongle-Bold.ttf" />
+    <None Remove="Fonts\Dongle\Dongle-Light.ttf" />
+    <None Remove="Fonts\Dongle\Dongle-Regular.ttf" />
     <None Remove="Fonts\Inter\Inter-Black.ttf" />
     <None Remove="Fonts\Inter\Inter-Bold.ttf" />
     <None Remove="Fonts\Inter\Inter-Medium.ttf" />
     <None Remove="Fonts\Inter\Inter-Regular.ttf" />
     <None Remove="Fonts\Inter\Inter-Thin.ttf" />
     <None Remove="Icons\close\white.png" />
+    <None Remove="Icons\copy\black.png" />
+    <None Remove="Icons\copy\white.png" />
     <None Remove="Icons\keys.ico" />
     <None Remove="Icons\keys.png" />
     <None Remove="Icons\minimize\white.png" />
+    <None Remove="Icons\search.png" />
     <None Remove="Icons\settings\black.png" />
     <None Remove="Icons\settings\white.png" />
   </ItemGroup>
@@ -31,6 +37,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Fonts\Dongle\Dongle-Bold.ttf" />
+    <Resource Include="Fonts\Dongle\Dongle-Light.ttf" />
+    <Resource Include="Fonts\Dongle\Dongle-Regular.ttf" />
     <Resource Include="Fonts\Inter\Inter-Black.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
@@ -49,6 +58,8 @@
     <Resource Include="Icons\close\white.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Icons\copy\black.png" />
+    <Resource Include="Icons\copy\white.png" />
     <Resource Include="Icons\keys.ico">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
@@ -56,6 +67,9 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Icons\minimize\white.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\search.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Icons\settings\black.png" />

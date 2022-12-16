@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <!-- Palette of colors -->
     <Color x:Key="PrimaryColor">#191919</Color>
-    <Color x:Key="SecondaryColor">#222</Color>
+    <Color x:Key="SecondaryColor">#292929</Color>
     
     <SolidColorBrush x:Key="TextColorBrush" Color="#fff"/>
     <SolidColorBrush x:Key="PrimaryColorBrush" Color="{DynamicResource PrimaryColor}"/>
@@ -14,4 +14,6 @@
     <BitmapImage x:Key="CloseIcon" UriSource="/Icons/close/white.png"/>
     <BitmapImage x:Key="MinimizeIcon" UriSource="/Icons/minimize/white.png"/>
     <BitmapImage x:Key="SettingsIcon" UriSource="/Icons/settings/white.png"/>
+    <BitmapImage x:Key="SearchIcon" UriSource="/Icons/search.png"/>
+    <BitmapImage x:Key="CopyIcon" UriSource="/Icons/copy/white.png"/>
 </ResourceDictionary>

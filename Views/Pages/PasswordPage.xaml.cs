@@ -1,4 +1,8 @@
-﻿using System.Windows.Controls;
+﻿using System.Collections.ObjectModel;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using AmnesiaManager.ViewModels;
 
 namespace AmnesiaManager.Views.Pages
 {
@@ -7,9 +11,11 @@ namespace AmnesiaManager.Views.Pages
     /// </summary>
     public partial class PasswordPage : Page
     {
+        #region Constructor
         public PasswordPage()
         {
             InitializeComponent();
         }
+        #endregion
     }
 }
