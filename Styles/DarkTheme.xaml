@@ -9,6 +9,7 @@
     <SolidColorBrush x:Key="SecondaryColorBrush" Color="{DynamicResource SecondaryColor}"/>
     <SolidColorBrush x:Key="AccentColorBrush" Color="#fed428"/>
     <SolidColorBrush x:Key="RedColorBrush" Color="#c85961"/>
+    <SolidColorBrush x:Key="LimeColorBrush" Color="#4bb34b"/>
 
     <!-- Icons -->
     <BitmapImage x:Key="CloseIcon" UriSource="/Icons/close/white.png"/>
@@ -16,7 +17,9 @@
     <BitmapImage x:Key="SettingsIcon" UriSource="/Icons/settings/white.png"/>
     <BitmapImage x:Key="CopyIcon" UriSource="/Icons/copy/white.png"/>
     <BitmapImage x:Key="PlusIcon" UriSource="/Icons/plus/white.png"/>
-    <BitmapImage x:Key="FlatLockIcon" UriSource="/Icons/lock/white.png"/>
+    <BitmapImage x:Key="OpenLockIcon" UriSource="/Icons/open-lock/white.png"/>
+    <BitmapImage x:Key="ClosedLockIcon" UriSource="/Icons/closed-lock/white.png"/>
+    <BitmapImage x:Key="LeftArrowIcon" UriSource="/Icons/arrow-left/white.png"/>
     <BitmapImage x:Key="SearchIcon" UriSource="/Icons/search.png"/>
     <BitmapImage x:Key="LockIcon" UriSource="/Icons/lock.png"/>
 </ResourceDictionary>

@@ -96,7 +96,7 @@ namespace AmnesiaManager.ViewModels
                 }
                ) return;
 
-            mainViewModel.ChangePage(type);
+            mainViewModel.ChangeViewModel(type);
         }
         #endregion
     }

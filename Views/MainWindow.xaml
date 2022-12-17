@@ -73,7 +73,7 @@
                                     Command="{Binding LockTheAppCommand}"
                                     ToolTip="Block the app"
                                     VerticalAlignment="Center">
-                                <Image Source="{DynamicResource FlatLockIcon}"
+                                <Image Source="{DynamicResource OpenLockIcon}"
                                        Width="15"
                                        Height="15"/>
                             </Button>

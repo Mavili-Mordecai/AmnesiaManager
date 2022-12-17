@@ -27,19 +27,27 @@
                     Canvas.Top="0"
                     Padding="0"
                     ClipToBounds="True">
-                <Grid Margin="50  15">
+                <Grid Margin="50 0 50 15">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="3*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" 
-                               Text="{Binding ApplicationName}"
-                               FontSize="32"
-                               FontFamily="{StaticResource Dongle}"
-                               VerticalAlignment="Top"
-                               HorizontalAlignment="Center"/>
+                    <StackPanel Grid.Row="0"
+                                Orientation="Horizontal"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center">
+                        <Image Source="{DynamicResource ClosedLockIcon}"
+                               Width="15"
+                               Height="15"
+                               Margin="0 0 10 8"/>
+
+                        <TextBlock Text="{Binding ApplicationName}"
+                                   FontSize="32"
+                                   FontFamily="{StaticResource Dongle}"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
 
                     <StackPanel Grid.Row="1"
                                 VerticalAlignment="Stretch"
@@ -70,7 +78,7 @@
                                 Margin="0 15 0 10"
                                 IsDefault="True"
                                 Content="Sign in"
-                                Background="{DynamicResource RedColorBrush}"
+                                Background="{DynamicResource LimeColorBrush}"
                                 Command="{Binding LoginCommand}"/>
 
                         <TextBlock Foreground="{DynamicResource RedColorBrush}"

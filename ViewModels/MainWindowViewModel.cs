@@ -43,7 +43,7 @@ namespace AmnesiaManager.ViewModels
 
             CurrentViewModel = new PasswordListViewModel();
 
-            ChangePageCommand = new DelegateCommand<int>(ChangePage);
+            ChangePageCommand = new DelegateCommand<int>(ChangeViewModel);
             ExitCommand = new DelegateCommand(Exit);
             LockTheAppCommand = new DelegateCommand(() => { OnRequestLock?.Invoke(this, EventArgs.Empty); });
 
@@ -64,7 +64,7 @@ namespace AmnesiaManager.ViewModels
         #endregion
 
         #region Public Methods
-        public void ChangePage(int type) => CurrentViewModel = _viewModelFactory.Get((ViewModelType)type);
+        public void ChangeViewModel(int type) => CurrentViewModel = _viewModelFactory.Get((ViewModelType)type);
         #endregion
 
         #region Private Methods

@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="AmnesiaManager.Views.Controls.SubtitlePanelControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModels="clr-namespace:AmnesiaManager.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="50" 
+             d:DesignWidth="300"
+             FontSize="24"
+             x:Name="UserControl">
+    <UserControl.DataContext>
+        <viewModels:SubtitlePanelViewModel/>
+    </UserControl.DataContext>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Column="0"
+                   Text="{Binding ElementName=UserControl, Path=Text}"
+                   FontFamily="{StaticResource Dongle}"
+                   FontSize="{Binding ElementName=UserControl, Path=FontSize}"/>
+
+        <Button Style="{DynamicResource FlatButton}"
+                Grid.Column="1"
+                Margin="10 0 0 0"
+                Padding="10 0"
+                BorderThickness="1"
+                BorderBrush="{DynamicResource SecondaryColorBrush}"
+                VerticalAlignment="Stretch"
+                Command="{Binding OpenPasswordListControlCommand}"
+                ToolTip="Back">
+            <Image Source="{DynamicResource LeftArrowIcon}"
+                   Width="12"
+                   Height="12"/>
+        </Button>
+    </Grid>
+</UserControl>
