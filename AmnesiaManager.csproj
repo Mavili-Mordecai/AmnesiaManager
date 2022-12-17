@@ -18,12 +18,18 @@
     <None Remove="Fonts\Inter\Inter-Medium.ttf" />
     <None Remove="Fonts\Inter\Inter-Regular.ttf" />
     <None Remove="Fonts\Inter\Inter-Thin.ttf" />
+    <None Remove="Fonts\password.ttf" />
     <None Remove="Icons\close\white.png" />
     <None Remove="Icons\copy\black.png" />
     <None Remove="Icons\copy\white.png" />
     <None Remove="Icons\keys.ico" />
     <None Remove="Icons\keys.png" />
+    <None Remove="Icons\lock.png" />
+    <None Remove="Icons\lock\black.png" />
+    <None Remove="Icons\lock\white.png" />
     <None Remove="Icons\minimize\white.png" />
+    <None Remove="Icons\plus\black.png" />
+    <None Remove="Icons\plus\white.png" />
     <None Remove="Icons\search.png" />
     <None Remove="Icons\settings\black.png" />
     <None Remove="Icons\settings\white.png" />
@@ -55,6 +61,7 @@
     <Resource Include="Fonts\Inter\Inter-Thin.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Fonts\password.ttf" />
     <Resource Include="Icons\close\white.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
@@ -66,14 +73,23 @@
     <Resource Include="Icons\keys.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Icons\lock.png" />
+    <Resource Include="Icons\lock\black.png" />
+    <Resource Include="Icons\lock\white.png" />
     <Resource Include="Icons\minimize\white.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Icons\plus\black.png" />
+    <Resource Include="Icons\plus\white.png" />
     <Resource Include="Icons\search.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Icons\settings\black.png" />
     <Resource Include="Icons\settings\white.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Security\" />
   </ItemGroup>
 
 </Project>

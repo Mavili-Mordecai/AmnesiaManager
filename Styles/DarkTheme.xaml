@@ -14,6 +14,9 @@
     <BitmapImage x:Key="CloseIcon" UriSource="/Icons/close/white.png"/>
     <BitmapImage x:Key="MinimizeIcon" UriSource="/Icons/minimize/white.png"/>
     <BitmapImage x:Key="SettingsIcon" UriSource="/Icons/settings/white.png"/>
-    <BitmapImage x:Key="SearchIcon" UriSource="/Icons/search.png"/>
     <BitmapImage x:Key="CopyIcon" UriSource="/Icons/copy/white.png"/>
+    <BitmapImage x:Key="PlusIcon" UriSource="/Icons/plus/white.png"/>
+    <BitmapImage x:Key="FlatLockIcon" UriSource="/Icons/lock/white.png"/>
+    <BitmapImage x:Key="SearchIcon" UriSource="/Icons/search.png"/>
+    <BitmapImage x:Key="LockIcon" UriSource="/Icons/lock.png"/>
 </ResourceDictionary>

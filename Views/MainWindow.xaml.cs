@@ -2,6 +2,7 @@
 using System;
 using System.ComponentModel;
 using System.Windows;
+using AmnesiaManager.ViewModels;
 
 namespace AmnesiaManager.Views
 {
@@ -13,6 +14,12 @@ namespace AmnesiaManager.Views
         #region Public Fields
         public static int Offset => 15;
         public bool IsAnimating;
+        #endregion
+
+        #region Private Fields
+        private bool _isOpened;
+        private bool _isNeedToClose;
+        private MainWindowViewModel? _viewModel;
         #endregion
 
         #region Constructor
@@ -28,14 +35,13 @@ namespace AmnesiaManager.Views
         }
         #endregion
 
-        #region MyRegion
-        private bool _isOpened = false;
-        #endregion
-
         #region Override Methods
         protected override void OnClosing(CancelEventArgs e)
         {
-            e.Cancel = true;
+            e.Cancel = !_isNeedToClose;
+            
+            if (!e.Cancel && !TaskbarIcon.IsDisposed) TaskbarIcon.Dispose();
+            
             base.OnClosing(e);
         }
 
@@ -83,5 +89,21 @@ namespace AmnesiaManager.Views
             }
         }
         #endregion
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            _viewModel = DataContext as MainWindowViewModel;
+            if (_viewModel == null) return;
+
+            _viewModel.OnRequestLock += (o, args) =>
+            {
+                var authorizationWindow = new AuthorizationWindow();
+                Application.Current.MainWindow = authorizationWindow;
+                authorizationWindow.Show();
+
+                _isNeedToClose = true;
+                Close();
+            };
+        }
     }
 }

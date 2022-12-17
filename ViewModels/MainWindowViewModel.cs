@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using AmnesiaManager.Factories;
 using AmnesiaManager.Models;
 using AmnesiaManager.Models.KeyboardHotkeys;
 using AmnesiaManager.Views;
@@ -14,39 +15,34 @@ using KeyDownTester.Keys;
 
 namespace AmnesiaManager.ViewModels
 {
-    internal enum PageType
-    {
-        Passwords = 0,
-        Settings = 1,
-        PasswordEditor = 2
-    }
-
     internal class MainWindowViewModel
     {
         #region Public Properties
-        public string ApplicationName => AppDomain.CurrentDomain.FriendlyName;
-        public DelegateCommand ExitCommand { get; }
+        public string ApplicationName => Product.Name;
         public Page CurrentPage { get; set; }
+
+        public event EventHandler OnRequestLock;
+
+        public DelegateCommand LockTheAppCommand { get; }
+        public DelegateCommand ExitCommand { get; }
+
         public ObservableCollection<PasswordModel> Passwords;
         #endregion
 
         #region Private Fields
-        private Dictionary<PageType, Page> _pages;
+        private PageFactory _pageFactory;
         #endregion
 
         #region Constructor
         public MainWindowViewModel()
         {
             Passwords = new ObservableCollection<PasswordModel>();
+            _pageFactory = new PageFactory();
 
-            _pages = new Dictionary<PageType, Page>
-            {
-                { PageType.Passwords, new PasswordPage() }
-            };
-
-            CurrentPage = _pages[PageType.Passwords];
+            CurrentPage = _pageFactory.Get(PageType.Passwords);
 
             ExitCommand = new DelegateCommand(Exit);
+            LockTheAppCommand = new DelegateCommand(() => { OnRequestLock?.Invoke(this, EventArgs.Empty); });
 
             HotkeysManager.SetupSystemHook();
             HotkeysManager.AddHotkey(

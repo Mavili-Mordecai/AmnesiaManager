@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Documents;
 using AmnesiaManager.Models;
+using AmnesiaManager.Repository;
 using DevExpress.Mvvm;
-using DevExpress.Mvvm.Native;
 
 namespace AmnesiaManager.ViewModels
 {
@@ -17,11 +11,6 @@ namespace AmnesiaManager.ViewModels
     {
         #region Public Properties
         public ObservableCollection<PasswordModel> VisiblePasswords { get; set; }
-        public ICollectionView? CollectionViewPasswords { get; set; } = null;
-
-        #region Commands
-        public DelegateCommand<string> CopyTextCommand { get; set; }
-        #endregion
         #endregion
 
         #region Backing Properties
@@ -38,48 +27,33 @@ namespace AmnesiaManager.ViewModels
         #endregion
 
         #region Private Fields
-        private List<PasswordModel> _allPasswords;
+        private List<PasswordModel> AllPasswords { get; set; }
+        private readonly IRepository<PasswordModel> _repository;
         #endregion
 
         #region Constructor
         public PasswordPageViewModel()
         {
-            _allPasswords = new List<PasswordModel>
-            {
-                new()
-                {
-                    Label = "google.com",
-                    Login = "Mavili",
-                    Password = "pa$$word"
-                },
-                new()
-                {
-                    Label = "yandex.ru",
-                    Login = "Mavili",
-                    Password = "pa$$word"
-                }
-            };
+            _repository = new LocalPasswordRepository();
 
-            VisiblePasswords = new ObservableCollection<PasswordModel>(_allPasswords);
+            var passwords = _repository.GetAll() ?? new List<PasswordModel>();
 
-            CopyTextCommand = new DelegateCommand<string>((s =>
-            {
-                MessageBox.Show(s);
-                Clipboard.SetDataObject(s);
-            }));
+            var passwordModels = passwords as PasswordModel[] ?? passwords.ToArray();
+            AllPasswords = new List<PasswordModel>(passwordModels.ToList());
+            VisiblePasswords = new ObservableCollection<PasswordModel>(passwordModels.ToList());
         }
         #endregion
 
-        #region Private Methods
+        #region Private eMthods
         private void DoSearch(string value)
         {
-            if (_allPasswords.Count == 0) return;
+            if (AllPasswords.Count == 0) return;
 
             if (string.IsNullOrWhiteSpace(value))
             {
                 VisiblePasswords.Clear();
 
-                _allPasswords.ForEach(
+                AllPasswords.ForEach(
                     pwd => VisiblePasswords.Add(pwd)
                 );
 
@@ -97,7 +71,7 @@ namespace AmnesiaManager.ViewModels
 
             //CollectionViewSource.GetDefaultView(VisiblePasswords).Refresh();
             
-            var foundedPasswords = _allPasswords.Where(
+            var foundedPasswords = AllPasswords.Where(
                 pwd => 
                     (pwd.Label ?? "").Contains(value) || 
                     (pwd.Login ?? "").Contains(value)
