@@ -1,46 +1,49 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using AmnesiaManager.Factories;
 using AmnesiaManager.Models;
 using AmnesiaManager.Models.KeyboardHotkeys;
 using AmnesiaManager.Views;
-using AmnesiaManager.Views.Pages;
 using DevExpress.Mvvm;
 using KeyDownTester.Keys;
 
 namespace AmnesiaManager.ViewModels
 {
-    internal class MainWindowViewModel
+    public class MainWindowViewModel : ViewModelBase
     {
         #region Public Properties
         public string ApplicationName => Product.Name;
-        public Page CurrentPage { get; set; }
+        public ObservableCollection<PasswordModel> Passwords;
+        public event EventHandler? OnRequestLock;
 
-        public event EventHandler OnRequestLock;
+        public object CurrentViewModel
+        {
+            get => GetProperty(() => CurrentViewModel);
+            set { SetProperty(() => CurrentViewModel, value); }
+        }
 
+        #region Commands
         public DelegateCommand LockTheAppCommand { get; }
         public DelegateCommand ExitCommand { get; }
-
-        public ObservableCollection<PasswordModel> Passwords;
+        public DelegateCommand<int> ChangePageCommand { get; }
         #endregion
-
+        #endregion
+        
         #region Private Fields
-        private PageFactory _pageFactory;
+        private readonly NavigationViewModelFactory _viewModelFactory;
         #endregion
 
         #region Constructor
         public MainWindowViewModel()
         {
             Passwords = new ObservableCollection<PasswordModel>();
-            _pageFactory = new PageFactory();
+            _viewModelFactory = new NavigationViewModelFactory();
 
-            CurrentPage = _pageFactory.Get(PageType.Passwords);
+            CurrentViewModel = new PasswordListViewModel();
 
+            ChangePageCommand = new DelegateCommand<int>(ChangePage);
             ExitCommand = new DelegateCommand(Exit);
             LockTheAppCommand = new DelegateCommand(() => { OnRequestLock?.Invoke(this, EventArgs.Empty); });
 
@@ -58,6 +61,10 @@ namespace AmnesiaManager.ViewModels
                 )
             );
         }
+        #endregion
+
+        #region Public Methods
+        public void ChangePage(int type) => CurrentViewModel = _viewModelFactory.Get((ViewModelType)type);
         #endregion
 
         #region Private Methods

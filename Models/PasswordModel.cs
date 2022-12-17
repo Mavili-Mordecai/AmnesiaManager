@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace AmnesiaManager.Models
 {
-    internal class PasswordModel
+    public class PasswordModel
     {
         #region Public Properties
         [JsonProperty("guid")] public Guid Guid { get; set; }

@@ -1,16 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
 using AmnesiaManager.Models;
 using AmnesiaManager.Repository;
+using AmnesiaManager.Views;
 using DevExpress.Mvvm;
 
 namespace AmnesiaManager.ViewModels
 {
-    internal class PasswordPageViewModel : ViewModelBase
+    internal class PasswordListViewModel : ViewModelBase
     {
         #region Public Properties
         public ObservableCollection<PasswordModel> VisiblePasswords { get; set; }
+
+        #region Commands
+        public DelegateCommand<int> SwitchPageToCommand { get; }
+        #endregion
         #endregion
 
         #region Backing Properties
@@ -32,19 +38,20 @@ namespace AmnesiaManager.ViewModels
         #endregion
 
         #region Constructor
-        public PasswordPageViewModel()
+        public PasswordListViewModel()
         {
             _repository = new LocalPasswordRepository();
 
             var passwords = _repository.GetAll() ?? new List<PasswordModel>();
-
             var passwordModels = passwords as PasswordModel[] ?? passwords.ToArray();
+
             AllPasswords = new List<PasswordModel>(passwordModels.ToList());
             VisiblePasswords = new ObservableCollection<PasswordModel>(passwordModels.ToList());
+            SwitchPageToCommand = new DelegateCommand<int>(SwitchPageTo);
         }
         #endregion
 
-        #region Private eMthods
+        #region Private Methods
         private void DoSearch(string value)
         {
             if (AllPasswords.Count == 0) return;
@@ -79,6 +86,17 @@ namespace AmnesiaManager.ViewModels
 
             foreach (var pwd in foundedPasswords) 
                 VisiblePasswords.Add(pwd);
+        }
+
+        private void SwitchPageTo(int type)
+        {
+            if (Application.Current.MainWindow is not MainWindow
+                {
+                    DataContext: MainWindowViewModel mainViewModel
+                }
+               ) return;
+
+            mainViewModel.ChangePage(type);
         }
         #endregion
     }
