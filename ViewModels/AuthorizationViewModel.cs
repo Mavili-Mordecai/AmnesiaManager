@@ -26,21 +26,19 @@ namespace AmnesiaManager.ViewModels
         #endregion
 
         #region Events
-        public event EventHandler OnRequestClose;
+        public event EventHandler? OnRequestClose;
         #endregion
 
         #region Private Fields
-        private readonly IRepository<PasswordModel> _repository;
         private readonly bool _isRegistration;
         #endregion
 
         #region Constructor
         public AuthorizationViewModel()
         {
-            _repository = new LocalPasswordRepository();
             LoginCommand = new DelegateCommand(Login);
 
-            _isRegistration = !_repository.IsExists();
+            _isRegistration = !PasswordRepository.Instance.IsExists();
 
             ConfirmPasswordVisibility = _isRegistration
                 ? Visibility.Visible
@@ -91,7 +89,7 @@ namespace AmnesiaManager.ViewModels
                 return;
             }
 
-            if (_repository.GetAll() == null)
+            if (PasswordRepository.Instance.GetAll() == null)
             {
                 FormError.Message = "Invalid password!";
                 return;

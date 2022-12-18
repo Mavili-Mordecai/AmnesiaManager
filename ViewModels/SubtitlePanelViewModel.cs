@@ -21,7 +21,6 @@ namespace AmnesiaManager.ViewModels
         #endregion
 
         #region Private Methods
-
         private void OpenPasswordListControl()
         {
             if (Application.Current.MainWindow is not MainWindow { DataContext: MainWindowViewModel viewModel }) return;

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using AmnesiaManager.Models;
@@ -12,7 +13,11 @@ namespace AmnesiaManager.ViewModels
     internal class PasswordListViewModel : ViewModelBase
     {
         #region Public Properties
-        public ObservableCollection<PasswordModel> VisiblePasswords { get; set; }
+        public ObservableCollection<PasswordModel> VisiblePasswords
+        {
+            get => GetProperty(() => VisiblePasswords);
+            set => SetProperty(() => VisiblePasswords, value);
+        }
 
         #region Commands
         public DelegateCommand<int> SwitchPageToCommand { get; }
@@ -34,20 +39,21 @@ namespace AmnesiaManager.ViewModels
 
         #region Private Fields
         private List<PasswordModel> AllPasswords { get; set; }
-        private readonly IRepository<PasswordModel> _repository;
         #endregion
 
         #region Constructor
         public PasswordListViewModel()
         {
-            _repository = new LocalPasswordRepository();
-
-            var passwords = _repository.GetAll() ?? new List<PasswordModel>();
+            var passwords = PasswordRepository.Instance.GetAll() ?? new List<PasswordModel>();
             var passwordModels = passwords as PasswordModel[] ?? passwords.ToArray();
 
             AllPasswords = new List<PasswordModel>(passwordModels.ToList());
             VisiblePasswords = new ObservableCollection<PasswordModel>(passwordModels.ToList());
             SwitchPageToCommand = new DelegateCommand<int>(SwitchPageTo);
+
+            PasswordRepository.Instance.OnPasswordCreated += OnPasswordCreated;
+            PasswordRepository.Instance.OnPasswordDeleted += OnPasswordDeleted;
+            PasswordRepository.Instance.OnPasswordUpdated += OnPasswordUpdated;
         }
         #endregion
 
@@ -64,20 +70,11 @@ namespace AmnesiaManager.ViewModels
                     pwd => VisiblePasswords.Add(pwd)
                 );
 
-                //CollectionViewSource.GetDefaultView(VisiblePasswords).Refresh();
                 return;
             }
             
             VisiblePasswords.Clear();
 
-            /*foreach (var pwd in _allPasswords.Where(
-                         pwd => 
-                             (pwd.Label?.Trim().ToLower() ?? "").Contains(value) ||
-                             (pwd.Login?.Trim().ToLower() ?? "").Contains(value))
-                    ) VisiblePasswords.Add(pwd);*/
-
-            //CollectionViewSource.GetDefaultView(VisiblePasswords).Refresh();
-            
             var foundedPasswords = AllPasswords.Where(
                 pwd => 
                     (pwd.Label ?? "").Contains(value) || 
@@ -97,6 +94,35 @@ namespace AmnesiaManager.ViewModels
                ) return;
 
             mainViewModel.ChangeViewModel(type);
+        }
+
+        private void OnPasswordCreated(PasswordModel password)
+        {
+            AllPasswords.Add(password);
+            VisiblePasswords.Add(password); 
+        }
+
+        private void OnPasswordDeleted(PasswordModel password)
+        {
+            AllPasswords.Remove(password);
+            VisiblePasswords.Remove(password);
+        }
+
+        private void OnPasswordUpdated(PasswordModel password)
+        {
+            for (var i = 0; i < AllPasswords.Count; i++)
+                if (AllPasswords[i].Guid == password.Guid)
+                {
+                    AllPasswords[i] = password;
+                    break;
+                }
+
+            for (var i = 0; i < VisiblePasswords.Count; i++)
+                if (VisiblePasswords[i].Guid == password.Guid)
+                {
+                    VisiblePasswords[i] = password;
+                    break;
+                }
         }
         #endregion
     }

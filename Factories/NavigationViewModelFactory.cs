@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Controls;
 using AmnesiaManager.ViewModels;
 
 namespace AmnesiaManager.Factories

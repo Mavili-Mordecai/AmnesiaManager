@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using AmnesiaManager.Repository;
 using AmnesiaManager.ViewModels;
 
 namespace AmnesiaManager.Views.Controls
@@ -21,10 +22,12 @@ namespace AmnesiaManager.Views.Controls
         }
         #endregion
 
+        #region Private Methods
         private void CopyText(object sender, RoutedEventArgs e)
         {
             if (sender is not Button { Tag: string tag }) return;
             _viewModel.CopyText(tag);
         }
+        #endregion
     }
 }

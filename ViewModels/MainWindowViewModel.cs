@@ -27,7 +27,7 @@ namespace AmnesiaManager.ViewModels
         #region Commands
         public DelegateCommand LockTheAppCommand { get; }
         public DelegateCommand ExitCommand { get; }
-        public DelegateCommand<int> ChangePageCommand { get; }
+        public DelegateCommand<int> ChangeViewModelCommand { get; }
         #endregion
         #endregion
         
@@ -41,9 +41,9 @@ namespace AmnesiaManager.ViewModels
             Passwords = new ObservableCollection<PasswordModel>();
             _viewModelFactory = new NavigationViewModelFactory();
 
-            CurrentViewModel = new PasswordListViewModel();
+            CurrentViewModel = _viewModelFactory.Get(ViewModelType.PasswordList);
 
-            ChangePageCommand = new DelegateCommand<int>(ChangeViewModel);
+            ChangeViewModelCommand = new DelegateCommand<int>(ChangeViewModel);
             ExitCommand = new DelegateCommand(Exit);
             LockTheAppCommand = new DelegateCommand(() => { OnRequestLock?.Invoke(this, EventArgs.Empty); });
 
@@ -65,6 +65,13 @@ namespace AmnesiaManager.ViewModels
 
         #region Public Methods
         public void ChangeViewModel(int type) => CurrentViewModel = _viewModelFactory.Get((ViewModelType)type);
+
+        public void EditPassword(PasswordModel password)
+        {
+            if (_viewModelFactory.Get(ViewModelType.PasswordEditor) is not PasswordEditorViewModel viewModel) return;
+            viewModel.SetEditablePassword(password);
+            ChangeViewModel(ViewModelType.PasswordEditor.GetHashCode());
+        }
         #endregion
 
         #region Private Methods

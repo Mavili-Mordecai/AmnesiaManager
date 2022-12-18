@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AmnesiaManager.Models;
 using AmnesiaManager.Security;
 using Newtonsoft.Json;
@@ -51,17 +49,41 @@ namespace AmnesiaManager.Repository
 
         public bool Create(PasswordModel entity)
         {
-            return true;
+            var items = GetAll()?.ToList() ?? new List<PasswordModel>();
+            items.Add(entity);
+            return WriteInFile(items);
         }
 
         public bool Update(PasswordModel entity)
         {
-            return true;
+            var passwords = GetAll()?.ToList();
+            if (passwords == null || passwords.Count == 0) return false;
+
+            var passwordIndex = passwords.FindIndex(
+                pwd => pwd.Guid == entity.Guid
+            );
+
+            if (passwordIndex == -1) return false;
+
+            passwords[passwordIndex] = entity;
+
+            return WriteInFile(passwords);
         }
 
         public bool Delete(PasswordModel entity)
         {
-            return true;
+            var passwords = GetAll()?.ToList();
+            if (passwords == null || passwords.Count == 0) return false;
+
+            var passwordIndex = passwords.FindIndex(
+                pwd => pwd.Guid == entity.Guid
+            );
+
+            if (passwordIndex == -1) return false;
+
+            passwords.RemoveAt(passwordIndex);
+
+            return WriteInFile(passwords);
         }
 
         public bool IsExists() => File.Exists(FileName);

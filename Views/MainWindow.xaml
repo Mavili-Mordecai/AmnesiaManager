@@ -87,7 +87,7 @@
                         <Button Style="{DynamicResource ButtonContent}"
                                 Grid.Column="1"
                                 ToolTip="Open the Settings window"
-                                Command="{Binding ChangePageCommand}"
+                                Command="{Binding ChangeViewModelCommand}"
                                 CommandParameter="2"
                                 Margin="0 0 5 0">
                             <Image Width="22"
