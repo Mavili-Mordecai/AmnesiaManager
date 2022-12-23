@@ -4,7 +4,7 @@ using AmnesiaManager.ViewModels;
 
 namespace AmnesiaManager.Factories
 {
-    internal enum ViewModelType
+    public enum ViewModelType
     {
         PasswordList = 0,
         PasswordEditor = 1,

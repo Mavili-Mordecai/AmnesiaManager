@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using AmnesiaManager.Models;
 using AmnesiaManager.Security;
+using AmnesiaManager.Services;
 using Newtonsoft.Json;
 
 namespace AmnesiaManager.Repository
@@ -18,7 +19,7 @@ namespace AmnesiaManager.Repository
         public IEnumerable<PasswordModel>? GetAll()
         {
             if (!File.Exists(FileName)) return new List<PasswordModel>();
-            if (User.Current.EncryptionKey.IsEmpty) return null;
+            if (UserService.Current.EncryptionKey.IsEmpty) return null;
 
             string content;
             try
@@ -26,7 +27,7 @@ namespace AmnesiaManager.Repository
                 var bytes = File.ReadAllBytes(FileName);
                 if (bytes.Length == 0) return new List<PasswordModel>();
 
-                content = SymmetricEncryptor.DecryptToString(bytes, User.Current.EncryptionKey.Value);
+                content = SymmetricEncryptor.DecryptToString(bytes, UserService.Current.EncryptionKey.Value);
             }
             catch (Exception)
             {
@@ -92,12 +93,12 @@ namespace AmnesiaManager.Repository
         #region Private Methods
         private bool WriteInFile(IReadOnlyCollection<PasswordModel> items)
         {
-            if (User.Current.EncryptionKey.IsEmpty) return false;
+            if (UserService.Current.EncryptionKey.IsEmpty) return false;
 
             try
             {
                 var content = JsonConvert.SerializeObject(items);
-                var bytes = SymmetricEncryptor.EncryptString(content, User.Current.EncryptionKey.Value);
+                var bytes = SymmetricEncryptor.EncryptString(content, UserService.Current.EncryptionKey.Value);
                 File.WriteAllBytes($"{FileName}", bytes);
                 return true;
             }

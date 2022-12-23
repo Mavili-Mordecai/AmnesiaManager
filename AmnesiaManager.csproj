@@ -5,38 +5,37 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
-    <ApplicationIcon>Icons\keys.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\Icons\keys.ico</ApplicationIcon>
     <Version>0.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Fonts\Dongle\Dongle-Bold.ttf" />
-    <None Remove="Fonts\Dongle\Dongle-Light.ttf" />
-    <None Remove="Fonts\Dongle\Dongle-Regular.ttf" />
-    <None Remove="Fonts\Inter\Inter-Black.ttf" />
-    <None Remove="Fonts\Inter\Inter-Bold.ttf" />
-    <None Remove="Fonts\Inter\Inter-Medium.ttf" />
-    <None Remove="Fonts\Inter\Inter-Regular.ttf" />
-    <None Remove="Fonts\Inter\Inter-Thin.ttf" />
-    <None Remove="Fonts\password.ttf" />
-    <None Remove="Icons\arrow-left\black.png" />
-    <None Remove="Icons\arrow-left\white.png" />
-    <None Remove="Icons\closed-lock\black.png" />
-    <None Remove="Icons\closed-lock\white.png" />
-    <None Remove="Icons\close\white.png" />
-    <None Remove="Icons\copy\black.png" />
-    <None Remove="Icons\copy\white.png" />
-    <None Remove="Icons\keys.ico" />
-    <None Remove="Icons\keys.png" />
-    <None Remove="Icons\lock.png" />
-    <None Remove="Icons\open-lock\black.png" />
-    <None Remove="Icons\open-lock\white.png" />
-    <None Remove="Icons\minimize\white.png" />
-    <None Remove="Icons\plus\black.png" />
-    <None Remove="Icons\plus\white.png" />
-    <None Remove="Icons\search.png" />
-    <None Remove="Icons\settings\black.png" />
-    <None Remove="Icons\settings\white.png" />
+    <None Remove="Resources\Fonts\Dongle\Dongle-Bold.ttf" />
+    <None Remove="Resources\Fonts\Dongle\Dongle-Light.ttf" />
+    <None Remove="Resources\Fonts\Dongle\Dongle-Regular.ttf" />
+    <None Remove="Resources\Fonts\Inter\Inter-Black.ttf" />
+    <None Remove="Resources\Fonts\Inter\Inter-Bold.ttf" />
+    <None Remove="Resources\Fonts\Inter\Inter-Medium.ttf" />
+    <None Remove="Resources\Fonts\Inter\Inter-Regular.ttf" />
+    <None Remove="Resources\Fonts\Inter\Inter-Thin.ttf" />
+    <None Remove="Resources\Fonts\password.ttf" />
+    <None Remove="Resources\Icons\arrow-left\black.png" />
+    <None Remove="Resources\Icons\arrow-left\white.png" />
+    <None Remove="Resources\Icons\closed-lock\black.png" />
+    <None Remove="Resources\Icons\closed-lock\white.png" />
+    <None Remove="Resources\Icons\close\white.png" />
+    <None Remove="Resources\Icons\copy\black.png" />
+    <None Remove="Resources\Icons\copy\white.png" />
+    <None Remove="Resources\Icons\keys.ico" />
+    <None Remove="Resources\Icons\lock.png" />
+    <None Remove="Resources\Icons\minimize\white.png" />
+    <None Remove="Resources\Icons\open-lock\black.png" />
+    <None Remove="Resources\Icons\open-lock\white.png" />
+    <None Remove="Resources\Icons\plus\black.png" />
+    <None Remove="Resources\Icons\plus\white.png" />
+    <None Remove="Resources\Icons\search.png" />
+    <None Remove="Resources\Icons\settings\black.png" />
+    <None Remove="Resources\Icons\settings\white.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -46,57 +45,64 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Fonts\Dongle\Dongle-Bold.ttf" />
-    <Resource Include="Fonts\Dongle\Dongle-Light.ttf" />
-    <Resource Include="Fonts\Dongle\Dongle-Regular.ttf" />
-    <Resource Include="Fonts\Inter\Inter-Black.ttf">
+    <Resource Include="Resources\Fonts\Dongle\Dongle-Bold.ttf" />
+    <Resource Include="Resources\Fonts\Dongle\Dongle-Light.ttf" />
+    <Resource Include="Resources\Fonts\Dongle\Dongle-Regular.ttf" />
+    <Resource Include="Resources\Fonts\Inter\Inter-Black.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Fonts\Inter\Inter-Bold.ttf">
+    <Resource Include="Resources\Fonts\Inter\Inter-Bold.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Fonts\Inter\Inter-Medium.ttf">
+    <Resource Include="Resources\Fonts\Inter\Inter-Medium.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Fonts\Inter\Inter-Regular.ttf">
+    <Resource Include="Resources\Fonts\Inter\Inter-Regular.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Fonts\Inter\Inter-Thin.ttf">
+    <Resource Include="Resources\Fonts\Inter\Inter-Thin.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Fonts\password.ttf" />
-    <Resource Include="Icons\arrow-left\black.png" />
-    <Resource Include="Icons\arrow-left\white.png" />
-    <Resource Include="Icons\closed-lock\black.png" />
-    <Resource Include="Icons\closed-lock\white.png" />
-    <Resource Include="Icons\close\white.png">
+    <Resource Include="Resources\Fonts\password.ttf" />
+    <Resource Include="Resources\Icons\arrow-left\black.png" />
+    <Resource Include="Resources\Icons\arrow-left\white.png" />
+    <Resource Include="Resources\Icons\closed-lock\black.png" />
+    <Resource Include="Resources\Icons\closed-lock\white.png" />
+    <Resource Include="Resources\Icons\close\white.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Icons\copy\black.png" />
-    <Resource Include="Icons\copy\white.png" />
-    <Resource Include="Icons\keys.ico">
+    <Resource Include="Resources\Icons\copy\black.png" />
+    <Resource Include="Resources\Icons\copy\white.png" />
+    <Resource Include="Resources\Icons\keys.ico">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Icons\keys.png">
+    <Resource Include="Resources\Icons\keys.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Icons\lock.png" />
-    <Resource Include="Icons\open-lock\black.png" />
-    <Resource Include="Icons\open-lock\white.png" />
-    <Resource Include="Icons\minimize\white.png">
+    <Resource Include="Resources\Icons\lock.png" />
+    <Resource Include="Resources\Icons\minimize\white.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Icons\plus\black.png" />
-    <Resource Include="Icons\plus\white.png" />
-    <Resource Include="Icons\search.png">
+    <Resource Include="Resources\Icons\open-lock\black.png" />
+    <Resource Include="Resources\Icons\open-lock\white.png" />
+    <Resource Include="Resources\Icons\plus\black.png" />
+    <Resource Include="Resources\Icons\plus\white.png" />
+    <Resource Include="Resources\Icons\search.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Icons\settings\black.png" />
-    <Resource Include="Icons\settings\white.png" />
+    <Resource Include="Resources\Icons\settings\black.png" />
+    <Resource Include="Resources\Icons\settings\white.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Security\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Resources\Icons\keys.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

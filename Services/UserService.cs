@@ -1,9 +1,9 @@
 ﻿using AmnesiaManager.Security;
 using AmnesiaManager.Security.EncryptedValue;
 
-namespace AmnesiaManager.Models
+namespace AmnesiaManager.Services
 {
-    internal class User
+    internal class UserService
     {
         #region Public Properties
         public bool IsLogged { get; set; } = false;
@@ -11,8 +11,8 @@ namespace AmnesiaManager.Models
         #endregion
 
         #region Singletone
-        private static User? _current;
-        public static User Current => _current ??= new User();
+        private static UserService? _current;
+        public static UserService Current => _current ??= new UserService();
         #endregion
     }
 }

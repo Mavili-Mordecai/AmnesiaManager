@@ -2,9 +2,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:system="clr-namespace:System;assembly=System.Runtime">
     <!-- Variables -->
-    <FontFamily x:Key="Inter">/Fonts/Inter/#Inter</FontFamily>
-    <FontFamily x:Key="Dongle">/Fonts/Dongle/#Dongle</FontFamily>
-    <FontFamily x:Key="Password">/Fonts/#Password</FontFamily>
+    <FontFamily x:Key="Inter">/Resources/Fonts/Inter/#Inter</FontFamily>
+    <FontFamily x:Key="Dongle">/Resources/Fonts/Dongle/#Dongle</FontFamily>
+    <FontFamily x:Key="Password">/Resources/Fonts/#Password</FontFamily>
 
     <system:Double x:Key="MainWindowWidth">300</system:Double>
     <system:Double x:Key="MainWindowHeight">350</system:Double>
@@ -60,11 +60,6 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type TextBlock}">
-        <Setter Property="FontFamily" Value="{StaticResource Inter}"/>
-        <Setter Property="Foreground" Value="{DynamicResource TextColorBrush}"/>
-    </Style>
-
     <Style TargetType="ToolTip">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
@@ -87,6 +82,11 @@
 
     <Style TargetType="{x:Type Button}">
         <Setter Property="FontFamily" Value="{StaticResource Inter}"/>
+    </Style>
+
+    <Style TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{StaticResource Inter}"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextColorBrush}"/>
     </Style>
 
     <Style x:Key="ButtonContent" TargetType="Button">

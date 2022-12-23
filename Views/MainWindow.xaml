@@ -15,11 +15,13 @@
         Style="{StaticResource MainWindow}">
     <Window.Resources>
         <DataTemplate DataType="{x:Type viewModels:PasswordEditorViewModel}">
-            <navigationControls:PasswordEditorControl/>
+            <navigationControls:PasswordEditorControl EditablePassword="{Binding EditablePassword}"/>
         </DataTemplate>
+
         <DataTemplate DataType="{x:Type viewModels:PasswordListViewModel}">
             <navigationControls:PasswordListControl/>
         </DataTemplate>
+        
         <DataTemplate DataType="{x:Type viewModels:SettingsViewModel}">
             <navigationControls:SettingsControl/>
         </DataTemplate>
@@ -33,7 +35,7 @@
         <tb:TaskbarIcon x:Name="TaskbarIcon"
                         Visibility="Visible" 
                         ToolTipText="{Binding ApplicationName}" 
-                        IconSource="/Icons/keys.ico"
+                        IconSource="/Resources/Icons/keys.ico"
                         TrayLeftMouseDown="ToggleWindow">
             <tb:TaskbarIcon.ContextMenu>
                 <ContextMenu Style="{DynamicResource ContextMenu}">

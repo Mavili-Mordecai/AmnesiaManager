@@ -2,6 +2,7 @@
 using System.Windows;
 using AmnesiaManager.Models;
 using AmnesiaManager.Repository;
+using AmnesiaManager.Services;
 using AmnesiaManager.Views;
 using DevExpress.Mvvm;
 using static System.String;
@@ -81,7 +82,7 @@ namespace AmnesiaManager.ViewModels
 
             if (!ValidateForm()) return;
 
-            User.Current.EncryptionKey.Value = Password.Trim();
+            UserService.Current.EncryptionKey.Value = Password.Trim();
 
             if (_isRegistration)
             {

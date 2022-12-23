@@ -4,15 +4,15 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Input;
-using KeyDownTester.Keys;
+using AmnesiaManager.Models;
 
-namespace AmnesiaManager.Models.KeyboardHotkeys
+namespace AmnesiaManager.Services
 {
     /// <summary>
     /// A class for adding/removing global hotkeys to and from your application, 
     /// meaning these hotkeys can be run even if your application isn't focused.
     /// </summary>
-    public static class HotkeysManager
+    public static class HotkeyService
     {
         // Events
 
@@ -56,7 +56,7 @@ namespace AmnesiaManager.Models.KeyboardHotkeys
         /// </summary>
         public static bool RequiresModifierKey { get; set; }
 
-        static HotkeysManager()
+        static HotkeyService()
         {
             Hotkeys = new List<GlobalHotkey>();
             RequiresModifierKey = true;
@@ -218,7 +218,6 @@ namespace AmnesiaManager.Models.KeyboardHotkeys
         }
 
         #region Native Methods
-
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern IntPtr SetWindowsHookEx(int idHook, LowLevelKeyboardProc lpfn, IntPtr hMod,
             uint dwThreadId);
@@ -232,7 +231,6 @@ namespace AmnesiaManager.Models.KeyboardHotkeys
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern IntPtr GetModuleHandle(string lpModuleName);
-
         #endregion
     }
 }

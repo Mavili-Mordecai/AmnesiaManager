@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Windows;
+﻿using System.Windows;
 using AmnesiaManager.Models;
 using AmnesiaManager.Repository;
 using AmnesiaManager.Security;
@@ -18,8 +17,17 @@ namespace AmnesiaManager.ViewModels
             set => SetProperty(() => Label, value);
         }
 
-        public string Login { get; set; } = string.Empty;
-        public string Password { get; set; } = string.Empty;
+        public string Login
+        {
+            get => GetProperty(() => Login);
+            set => SetProperty(() => Login, value);
+        }
+
+        public string Password
+        {
+            get => GetProperty(() => Password);
+            set => SetProperty(() => Password, value);
+        }
 
         public Error FormError
         {
@@ -34,7 +42,7 @@ namespace AmnesiaManager.ViewModels
         #endregion
 
         #region Private Fields
-        private PasswordModel? _editablePassword;
+        public PasswordModel? EditablePassword { get; set; }
         #endregion
 
         #region Constructor
@@ -53,10 +61,10 @@ namespace AmnesiaManager.ViewModels
         #region Public Methods
         public void SetEditablePassword(PasswordModel? editablePassword)
         { 
-            _editablePassword = editablePassword;
-            Label = _editablePassword?.Label ?? string.Empty;
-            Login = _editablePassword?.Login ?? string.Empty;
-            Password = _editablePassword?.Password.Value ?? string.Empty;
+            EditablePassword = editablePassword;
+            Label = EditablePassword?.Label ?? string.Empty;
+            Login = EditablePassword?.Login ?? string.Empty;
+            Password = EditablePassword?.Password.Value ?? string.Empty;
         }
         #endregion
 
@@ -65,14 +73,14 @@ namespace AmnesiaManager.ViewModels
         {
             if (!ValidateForm()) return;
 
-            if (_editablePassword != null)
+            if (EditablePassword != null)
             {
                 // Editable mode
-                _editablePassword.Label = Label;
-                _editablePassword.Login = Login;
-                _editablePassword.Password.Value = Password;
+                EditablePassword.Label = Label;
+                EditablePassword.Login = Login;
+                EditablePassword.Password.Value = Password;
 
-                if (!PasswordRepository.Instance.Update(_editablePassword)) FormError.Message = "Failed to save password!";
+                if (!PasswordRepository.Instance.Update(EditablePassword)) FormError.Message = "Failed to save password!";
                 else ClearAndExit();
                 
                 return;

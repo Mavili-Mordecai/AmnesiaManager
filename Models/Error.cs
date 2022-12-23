@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using DevExpress.Mvvm;
 
 namespace AmnesiaManager.Models
 {
