@@ -24,6 +24,7 @@ namespace AmnesiaManager.ViewModels
 
         #region Commands
         public DelegateCommand LoginCommand { get; set; }
+        public DelegateCommand ExitCommand { get; }
         #endregion
         #endregion
 
@@ -39,6 +40,7 @@ namespace AmnesiaManager.ViewModels
         public AuthorizationViewModel()
         {
             LoginCommand = new DelegateCommand(Login);
+            ExitCommand = new DelegateCommand(Exit);
 
             _isRegistration = !PasswordRepository.Instance.IsExists();
 
@@ -85,7 +87,7 @@ namespace AmnesiaManager.ViewModels
 
             if (_isRegistration)
             {
-                if (PasswordRepository.Instance.MarkAsRegistrated())
+                if (PasswordRepository.Instance.MarkAsRegistered())
                 {
                     GoToMainWindow();
                     return;
@@ -112,6 +114,12 @@ namespace AmnesiaManager.ViewModels
             Application.Current.MainWindow = window;
             window.Show();
             OnRequestClose?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void Exit()
+        {
+            if (Application.Current.MainWindow is AuthorizationWindow window) window.TaskbarIcon.Dispose();
+            Environment.Exit(0);
         }
         #endregion
     }

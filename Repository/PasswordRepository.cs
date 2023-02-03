@@ -53,7 +53,7 @@ namespace AmnesiaManager.Repository
             return true;
         }
 
-        public bool MarkAsRegistrated() => _repository.MarkAsRegistrated();
+        public bool MarkAsRegistered() => _repository.MarkAsRegistered();
 
         public bool IsExists() => _repository.IsExists();
         #endregion

@@ -9,6 +9,6 @@ namespace AmnesiaManager.Repository
         bool Update(T entity);
         bool Delete(T entity);
         bool IsExists();
-        bool MarkAsRegistrated();
+        bool MarkAsRegistered();
     }
 }

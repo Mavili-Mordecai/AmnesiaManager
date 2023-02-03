@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Policy;
 using System.Windows;
 using AmnesiaManager.Models;
 using AmnesiaManager.Security;
@@ -19,13 +20,14 @@ namespace AmnesiaManager.Repository
         #region Public Methods
         public IEnumerable<PasswordModel>? GetAll()
         {
-            if (!File.Exists(FileName)) return new List<PasswordModel>();
+            if (Product.GetApplicationDirectory() is not { } applicationDirectory) return null;
+            if (!File.Exists($@"{applicationDirectory}\{FileName}")) return new List<PasswordModel>();
             if (UserService.Current.EncryptionKey.IsEmpty) return null;
             
             string content;
             try
             {
-                var bytes = File.ReadAllBytes(FileName);
+                var bytes = File.ReadAllBytes($@"{applicationDirectory}\{FileName}");
                 if (bytes.Length == 0) return new List<PasswordModel>();
 
                 content = SymmetricEncryptor.DecryptToString(bytes, UserService.Current.EncryptionKey.Value);
@@ -93,15 +95,18 @@ namespace AmnesiaManager.Repository
             return WriteInFile(passwords);
         }
 
-        public bool MarkAsRegistrated() => WriteInFile(null);
-        
-        public bool IsExists() => File.Exists(FileName);
+        public bool MarkAsRegistered() => WriteInFile(null);
+
+        public bool IsExists() => Product.GetApplicationDirectory() is { } applicationDirectory && File.Exists($@"{applicationDirectory}\{FileName}");
         #endregion
 
         #region Private Methods
         private bool WriteInFile(List<PasswordModel>? items)
         {
-            if (UserService.Current.EncryptionKey.IsEmpty) return false;
+            if (
+                UserService.Current.EncryptionKey.IsEmpty ||
+                Product.GetApplicationDirectory() is not { } applicationDirectory
+            ) return false;
 
             try
             {
@@ -113,7 +118,7 @@ namespace AmnesiaManager.Repository
 
                 var content = JsonConvert.SerializeObject(storageModel);
                 var bytes = SymmetricEncryptor.EncryptString(content, UserService.Current.EncryptionKey.Value);
-                File.WriteAllBytes($"{FileName}", bytes);
+                File.WriteAllBytes($@"{applicationDirectory}\{FileName}", bytes);
                 return true;
             }
             catch (Exception)

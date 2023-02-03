@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using AmnesiaManager.Repository;
 using AmnesiaManager.ViewModels;
 
 namespace AmnesiaManager.Views.Controls

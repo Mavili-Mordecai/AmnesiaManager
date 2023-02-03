@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
@@ -38,6 +39,26 @@ namespace AmnesiaManager.Models
             );
 
             return formattedVersion;
+        }
+
+        public static string? GetApplicationDirectory()
+        {
+            var appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            var appDirPath = appDataPath + $"\\{Name}";
+
+            if (Directory.Exists(appDirPath)) return appDirPath;
+
+            try
+            {
+                Directory.CreateDirectory(appDirPath);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                // TODO: Log this exception
+                return null;
+            }
+
+            return appDirPath;
         }
     }
 }

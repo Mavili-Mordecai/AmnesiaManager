@@ -1,6 +1,7 @@
 ﻿using AmnesiaManager.Animations;
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows;
 using AmnesiaManager.ViewModels;
 
@@ -60,21 +61,6 @@ namespace AmnesiaManager.Views
         #endregion
 
         #region Public Methods
-        public void AnimationHide()
-        {
-            if (!_isOpened || IsAnimating) return;
-
-            IsAnimating = true;
-            Topmost = true;
-            Slide.Right(BorderContent, (_, _) =>
-            {
-                Hide();
-                IsAnimating = false;
-                _isOpened = false;
-                Topmost = false;
-            });
-        }
-
         public void ToggleWindow(object sender, RoutedEventArgs? e)
         {
             //if (IsAnimating) return;
@@ -90,6 +76,23 @@ namespace AmnesiaManager.Views
         }
         #endregion
 
+        #region Private Methods
+        private void AnimationHide(EventHandler? completed = null)
+        {
+            if (!_isOpened || IsAnimating) return;
+
+            IsAnimating = true;
+            Topmost = true;
+            Slide.Right(BorderContent, (_, _) =>
+            {
+                Hide();
+                IsAnimating = false;
+                _isOpened = false;
+                Topmost = false;
+                completed?.Invoke(this, EventArgs.Empty);
+            });
+        }
+
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             _viewModel = DataContext as MainWindowViewModel;
@@ -97,13 +100,12 @@ namespace AmnesiaManager.Views
 
             _viewModel.OnRequestLock += (o, args) =>
             {
-                var authorizationWindow = new AuthorizationWindow();
-                Application.Current.MainWindow = authorizationWindow;
-                authorizationWindow.Show();
-
+                Application.Current.MainWindow = new AuthorizationWindow();
                 _isNeedToClose = true;
-                Close();
+
+                AnimationHide((s, e) => { Close(); });
             };
-        }
+        }        
+        #endregion
     }
 }

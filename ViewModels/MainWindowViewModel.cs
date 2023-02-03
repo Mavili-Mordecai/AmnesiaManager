@@ -47,7 +47,10 @@ namespace AmnesiaManager.ViewModels
 
             ChangeViewModelCommand = new DelegateCommand<int>(ChangePage);
             ExitCommand = new DelegateCommand(Exit);
-            LockTheAppCommand = new DelegateCommand(() => { OnRequestLock?.Invoke(this, EventArgs.Empty); });
+            LockTheAppCommand = new DelegateCommand(() =>
+            {
+                OnRequestLock?.Invoke(this, EventArgs.Empty);
+            });
 
             CurrentPage = _pageFactory.Get(PageType.PasswordList);
             

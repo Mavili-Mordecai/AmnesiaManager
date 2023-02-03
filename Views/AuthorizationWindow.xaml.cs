@@ -1,5 +1,6 @@
 ﻿using AmnesiaManager.Animations;
 using System;
+using System.ComponentModel;
 using System.Windows;
 using AmnesiaManager.ViewModels;
 
@@ -24,6 +25,8 @@ namespace AmnesiaManager.Views
             var monitorArea = SystemParameters.WorkArea;
             Left = monitorArea.Right - Width - MainWindow.Offset;
             Top = monitorArea.Bottom - Height - MainWindow.Offset;
+
+            ShowInTaskbar = false;
         }
         #endregion
 
@@ -32,6 +35,7 @@ namespace AmnesiaManager.Views
         {
             if (_isOpened || _isAnimating) return;
             _isAnimating = true;
+            Topmost = true;
 
             Slide.Left(BorderContent, (_, _) =>
             {
@@ -39,7 +43,43 @@ namespace AmnesiaManager.Views
                 _isOpened = true;
             });
         }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            base.OnClosing(e);
+            TaskbarIcon.Dispose();
+        }
         #endregion
+
+        #region Private Methods
+        private void AnimationHide()
+        {
+            if (!_isOpened || _isAnimating) return;
+
+            _isAnimating = true;
+            Topmost = true;
+            Slide.Right(BorderContent, (_, _) =>
+            {
+                Hide();
+                _isAnimating = false;
+                _isOpened = false;
+                Topmost = false;
+            });
+        }
+
+        public void ToggleWindow(object sender, RoutedEventArgs? e)
+        {
+            //if (IsAnimating) return;
+            if (!IsVisible)
+            {
+                Show();
+                Activate();
+            }
+            else
+            {
+                AnimationHide();
+            }
+        }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
@@ -48,5 +88,6 @@ namespace AmnesiaManager.Views
 
             _viewModel.OnRequestClose += (_, _) => { Close(); };
         }
+        #endregion
     }
 }

@@ -1,5 +1,4 @@
 ﻿using DevExpress.Mvvm;
-using System;
 using System.Windows;
 
 namespace AmnesiaManager.ViewModels
@@ -11,3 +10,4 @@ namespace AmnesiaManager.ViewModels
         #endregion
     }
 }
+        
