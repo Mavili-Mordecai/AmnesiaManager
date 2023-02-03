@@ -5,6 +5,7 @@ using AmnesiaManager.Repository;
 using AmnesiaManager.Services;
 using AmnesiaManager.Views;
 using DevExpress.Mvvm;
+using Newtonsoft.Json;
 using static System.String;
 
 namespace AmnesiaManager.ViewModels
@@ -75,6 +76,7 @@ namespace AmnesiaManager.ViewModels
             return true;
         }
 
+        // TODO: Fix problem with login
         private void Login()
         {
             FormError.Message = "test";
@@ -86,7 +88,13 @@ namespace AmnesiaManager.ViewModels
 
             if (_isRegistration)
             {
-                GoToMainWindow();
+                if (PasswordRepository.Instance.MarkAsRegistrated())
+                {
+                    GoToMainWindow();
+                    return;
+                }
+
+                FormError.Message = "Failed to create file!";
                 return;
             }
 

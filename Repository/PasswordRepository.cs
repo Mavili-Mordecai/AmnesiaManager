@@ -51,7 +51,9 @@ namespace AmnesiaManager.Repository
             OnPasswordDeleted?.Invoke(entity);
             Task.Run(() => { _repository.Delete(entity); });
             return true;
-        } 
+        }
+
+        public bool MarkAsRegistrated() => _repository.MarkAsRegistrated();
 
         public bool IsExists() => _repository.IsExists();
         #endregion

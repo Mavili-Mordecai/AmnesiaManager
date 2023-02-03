@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Windows;
 using AmnesiaManager.Models;
 using AmnesiaManager.Security;
 using AmnesiaManager.Services;
@@ -20,7 +21,7 @@ namespace AmnesiaManager.Repository
         {
             if (!File.Exists(FileName)) return new List<PasswordModel>();
             if (UserService.Current.EncryptionKey.IsEmpty) return null;
-
+            
             string content;
             try
             {
@@ -39,7 +40,8 @@ namespace AmnesiaManager.Repository
 
             try
             {
-                return JsonConvert.DeserializeObject<List<PasswordModel>>(content);
+                var deserializedStorageModel = JsonConvert.DeserializeObject<StorageModel>(content);
+                return deserializedStorageModel?.Passwords;
             }
             catch (Exception)
             {
@@ -87,17 +89,25 @@ namespace AmnesiaManager.Repository
             return WriteInFile(passwords);
         }
 
+        public bool MarkAsRegistrated() => WriteInFile(null);
+        
         public bool IsExists() => File.Exists(FileName);
         #endregion
 
         #region Private Methods
-        private bool WriteInFile(IReadOnlyCollection<PasswordModel> items)
+        private bool WriteInFile(List<PasswordModel>? items)
         {
             if (UserService.Current.EncryptionKey.IsEmpty) return false;
 
             try
             {
-                var content = JsonConvert.SerializeObject(items);
+                var storageModel = new StorageModel
+                {
+                    IsAuthenticated = true,
+                    Passwords = items
+                };
+
+                var content = JsonConvert.SerializeObject(storageModel);
                 var bytes = SymmetricEncryptor.EncryptString(content, UserService.Current.EncryptionKey.Value);
                 File.WriteAllBytes($"{FileName}", bytes);
                 return true;
