@@ -49,11 +49,12 @@
                          MaxLength="{Binding ElementName=UserControl, Path=MaxLength}"/>
 
                 <TextBlock Text="{Binding ElementName=UserControl, Path=Placeholder, UpdateSourceTrigger=PropertyChanged}"
-                           Panel.ZIndex="1"
                            VerticalAlignment="{Binding ElementName=UserControl, Path=VerticalContentAlignment}"
                            HorizontalAlignment="{Binding ElementName=UserControl, Path=HorizontalContentAlignment}"
                            FontSize="{Binding ElementName=UserControl, Path=FontSize}"
-                           FontFamily="{StaticResource Inter}">
+                           FontFamily="{StaticResource Inter}"
+                           Margin="2 0"
+                           Panel.ZIndex="1">
                     <TextBlock.Style>
                         <Style TargetType="{x:Type TextBlock}">
                             <Setter Property="Foreground" Value="Transparent"/>

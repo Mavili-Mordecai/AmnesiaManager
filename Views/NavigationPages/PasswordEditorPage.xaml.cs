@@ -1,16 +1,13 @@
-﻿using System.Diagnostics;
-using AmnesiaManager.Models;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using AmnesiaManager.Factories;
-using AmnesiaManager.ViewModels;
+using AmnesiaManager.Models;
 
-namespace AmnesiaManager.Views.NavigationControls
+namespace AmnesiaManager.Views.NavigationPages
 {
     /// <summary>
-    /// Interaction logic for PasswordEditorControl.xaml
+    /// Interaction logic for PasswordEditorPage.xaml
     /// </summary>
-    public partial class PasswordEditorControl : UserControl
+    public partial class PasswordEditorPage : Page
     {
         #region Dependency Property
         public PasswordModel? EditablePassword
@@ -22,13 +19,13 @@ namespace AmnesiaManager.Views.NavigationControls
         public static readonly DependencyProperty EditablePasswordProperty = DependencyProperty.Register(
             nameof(EditablePassword),
             typeof(PasswordModel),
-            typeof(PasswordEditorControl),
+            typeof(PasswordEditorPage),
             new PropertyMetadata(null)
         );
         #endregion
 
         #region Constructor
-        public PasswordEditorControl()
+        public PasswordEditorPage()
         {
             InitializeComponent();
         }

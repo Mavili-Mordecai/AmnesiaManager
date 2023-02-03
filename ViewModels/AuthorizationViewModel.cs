@@ -79,9 +79,6 @@ namespace AmnesiaManager.ViewModels
         // TODO: Fix problem with login
         private void Login()
         {
-            FormError.Message = "test";
-            FormError.Visibility = Visibility.Visible;
-
             if (!ValidateForm()) return;
 
             UserService.Current.EncryptionKey.Value = Password.Trim();

@@ -41,7 +41,11 @@ namespace AmnesiaManager.Repository
             try
             {
                 var deserializedStorageModel = JsonConvert.DeserializeObject<StorageModel>(content);
-                return deserializedStorageModel?.Passwords;
+                if (deserializedStorageModel == null) return null;
+
+                return deserializedStorageModel.IsAuthenticated
+                    ? deserializedStorageModel?.Passwords ?? new List<PasswordModel>()
+                    : null;
             }
             catch (Exception)
             {

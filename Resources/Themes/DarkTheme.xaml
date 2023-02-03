@@ -10,6 +10,7 @@
     <SolidColorBrush x:Key="AccentColorBrush" Color="#fed428"/>
     <SolidColorBrush x:Key="RedColorBrush" Color="#c85961"/>
     <SolidColorBrush x:Key="LimeColorBrush" Color="#4bb34b"/>
+    <SolidColorBrush x:Key="LightBlueColorBrush" Color="#2b9dd5"/>
 
     <!-- Icons -->
     <BitmapImage x:Key="CloseIcon" UriSource="/Resources/Icons/close/white.png"/>

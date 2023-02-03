@@ -105,7 +105,7 @@ namespace AmnesiaManager.ViewModels
                 {
                     DataContext: MainWindowViewModel mainViewModel
                 }) return;
-            mainViewModel.ChangeViewModel(0);
+            mainViewModel.ChangePage(0);
         }
 
         private bool ValidateForm()

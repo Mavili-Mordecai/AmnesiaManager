@@ -87,6 +87,21 @@
                                    Visibility="{Binding FormError.Visibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                    Text="{Binding FormError.Message, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </StackPanel>
+
+                    <StackPanel Grid.Row="2"
+                                Orientation="Horizontal"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center">
+                        <TextBlock Text="Developed by"
+                                   FontSize="11"/>
+
+                        <controls:HyperlinkControl Text="Mavili"
+                                                   FontSize="11"
+                                                   Margin="3 0 0 0"
+                                                   Foreground="{DynamicResource LightBlueColorBrush}"
+                                                   FontFamily="{DynamicResource Inter}"
+                                                   Url="https://github.com/Mavili-Mordecai"/>
+                    </StackPanel>
                 </Grid>
             </Border>
         </Canvas>

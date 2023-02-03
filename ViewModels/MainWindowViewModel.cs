@@ -1,16 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 using AmnesiaManager.Factories;
 using AmnesiaManager.Models;
 using AmnesiaManager.Services;
 using AmnesiaManager.Views;
+using AmnesiaManager.Views.NavigationPages;
 using DevExpress.Mvvm;
 
 namespace AmnesiaManager.ViewModels
 {
+    
     public class MainWindowViewModel : ViewModelBase
     {
         #region Public Properties
@@ -18,10 +23,9 @@ namespace AmnesiaManager.ViewModels
         public ObservableCollection<PasswordModel> Passwords;
         public event EventHandler? OnRequestLock;
 
-        public object? CurrentViewModel
-        {
-            get => GetProperty(() => CurrentViewModel);
-            set { SetProperty(() => CurrentViewModel, value); }
+        public Page CurrentPage { 
+            get => GetProperty(() => CurrentPage);
+            set => SetProperty(() => CurrentPage, value);
         }
 
         #region Commands
@@ -32,21 +36,21 @@ namespace AmnesiaManager.ViewModels
         #endregion
         
         #region Private Fields
-        private readonly NavigationViewModelFactory _viewModelFactory;
+        private readonly NavigationPageFactory _pageFactory;
         #endregion
 
         #region Constructor
         public MainWindowViewModel()
         {
             Passwords = new ObservableCollection<PasswordModel>();
-            _viewModelFactory = new NavigationViewModelFactory();
+            _pageFactory = new NavigationPageFactory();
 
-            CurrentViewModel = _viewModelFactory.Get(ViewModelType.PasswordList);
-
-            ChangeViewModelCommand = new DelegateCommand<int>(ChangeViewModel);
+            ChangeViewModelCommand = new DelegateCommand<int>(ChangePage);
             ExitCommand = new DelegateCommand(Exit);
             LockTheAppCommand = new DelegateCommand(() => { OnRequestLock?.Invoke(this, EventArgs.Empty); });
 
+            CurrentPage = _pageFactory.Get(PageType.PasswordList);
+            
             HotkeyService.SetupSystemHook();
             HotkeyService.AddHotkey(
                 new GlobalHotkey(
@@ -64,21 +68,21 @@ namespace AmnesiaManager.ViewModels
         #endregion
 
         #region Public Methods
-        public void ChangeViewModel(int type) => CurrentViewModel = _viewModelFactory.Get((ViewModelType)type);
+        public void ChangePage(int type) => CurrentPage = _pageFactory.Get((PageType)type);
 
         public void EditPassword(PasswordModel password)
         {
-            var viewModel = _viewModelFactory.Get(ViewModelType.PasswordEditor) as PasswordEditorViewModel;
-            viewModel?.SetEditablePassword(password);
-            CurrentViewModel = viewModel;
+            var page = _pageFactory.Get(PageType.PasswordEditor, false) as PasswordEditorPage;
+            if (page?.DataContext is not PasswordEditorViewModel viewModel) return;
+            viewModel.SetEditablePassword(password);
+            CurrentPage = page;
         }
         #endregion
 
         #region Private Methods
         private void Exit()
         {
-            if (Application.Current.MainWindow is MainWindow window) 
-                window.TaskbarIcon.Dispose();
+            if (Application.Current.MainWindow is MainWindow window) window.TaskbarIcon.Dispose();
             Environment.Exit(0);
         }
         #endregion

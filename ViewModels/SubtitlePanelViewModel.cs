@@ -24,7 +24,7 @@ namespace AmnesiaManager.ViewModels
         private void OpenPasswordListControl()
         {
             if (Application.Current.MainWindow is not MainWindow { DataContext: MainWindowViewModel viewModel }) return;
-            viewModel.ChangeViewModel(ViewModelType.PasswordList.GetHashCode());
+            viewModel.ChangePage(PageType.PasswordList.GetHashCode());
         }
         #endregion
     }

@@ -93,7 +93,7 @@ namespace AmnesiaManager.ViewModels
                 }
                ) return;
 
-            mainViewModel.ChangeViewModel(type);
+            mainViewModel.ChangePage(type);
         }
 
         private void OnPasswordCreated(PasswordModel password)
@@ -113,14 +113,16 @@ namespace AmnesiaManager.ViewModels
             for (var i = 0; i < AllPasswords.Count; i++)
                 if (AllPasswords[i].Guid == password.Guid)
                 {
-                    AllPasswords[i] = password;
+                    AllPasswords.RemoveAt(i);
+                    AllPasswords.Insert(i, password);
                     break;
                 }
 
             for (var i = 0; i < VisiblePasswords.Count; i++)
                 if (VisiblePasswords[i].Guid == password.Guid)
                 {
-                    VisiblePasswords[i] = password;
+                    VisiblePasswords.RemoveAt(i);
+                    VisiblePasswords.Insert(i, password);
                     break;
                 }
         }
