@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.Policy;
-using System.Windows;
 using AmnesiaManager.Models;
 using AmnesiaManager.Security;
 using AmnesiaManager.Services;

@@ -1,8 +1,5 @@
 ﻿using AmnesiaManager.Security;
 using AmnesiaManager.Security.EncryptedValue;
-using Microsoft.VisualBasic.Logging;
-using System.IO;
-using System;
 
 namespace AmnesiaManager.Services
 {

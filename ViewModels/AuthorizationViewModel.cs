@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Security;
 using System.Windows;
 using AmnesiaManager.Models;
 using AmnesiaManager.Repository;
 using AmnesiaManager.Services;
 using AmnesiaManager.Views;
 using DevExpress.Mvvm;
-using Newtonsoft.Json;
 using static System.String;
 
 namespace AmnesiaManager.ViewModels
@@ -78,7 +78,6 @@ namespace AmnesiaManager.ViewModels
             return true;
         }
 
-        // TODO: Fix problem with login
         private void Login()
         {
             if (!ValidateForm()) return;

@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 
 namespace AmnesiaManager.Models
 {
-    public class PasswordModel : ViewModelBase
+    public class PasswordModel : ViewModelBase, IDisposable
     {
         #region Public Properties
         [JsonProperty("guid")] public Guid Guid { get; set; }
@@ -48,6 +48,13 @@ namespace AmnesiaManager.Models
                     }) return;
                 viewModel.EditPassword(this);
             });
+        }
+        #endregion
+
+        #region Public Methods
+        public void Dispose()
+        {
+            Password.Clear();
         }
         #endregion
     }

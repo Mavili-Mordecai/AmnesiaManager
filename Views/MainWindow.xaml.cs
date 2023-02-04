@@ -1,7 +1,6 @@
 ﻿using AmnesiaManager.Animations;
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows;
 using AmnesiaManager.ViewModels;
 

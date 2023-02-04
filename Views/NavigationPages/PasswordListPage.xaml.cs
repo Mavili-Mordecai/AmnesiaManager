@@ -7,9 +7,11 @@ namespace AmnesiaManager.Views.NavigationPages
     /// </summary>
     public partial class PasswordListPage : Page
     {
+        #region Constructor
         public PasswordListPage()
         {
             InitializeComponent();
         }
+        #endregion
     }
 }

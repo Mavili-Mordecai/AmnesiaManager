@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Input;
 using AmnesiaManager.Factories;
 using AmnesiaManager.Models;
@@ -20,7 +16,6 @@ namespace AmnesiaManager.ViewModels
     {
         #region Public Properties
         public string ApplicationName => Product.Name;
-        public ObservableCollection<PasswordModel> Passwords;
         public event EventHandler? OnRequestLock;
 
         public Page CurrentPage { 
@@ -42,15 +37,11 @@ namespace AmnesiaManager.ViewModels
         #region Constructor
         public MainWindowViewModel()
         {
-            Passwords = new ObservableCollection<PasswordModel>();
             _pageFactory = new NavigationPageFactory();
 
             ChangeViewModelCommand = new DelegateCommand<int>(ChangePage);
             ExitCommand = new DelegateCommand(Exit);
-            LockTheAppCommand = new DelegateCommand(() =>
-            {
-                OnRequestLock?.Invoke(this, EventArgs.Empty);
-            });
+            LockTheAppCommand = new DelegateCommand(Lock);
 
             CurrentPage = _pageFactory.Get(PageType.PasswordList);
             
@@ -87,6 +78,11 @@ namespace AmnesiaManager.ViewModels
         {
             if (Application.Current.MainWindow is MainWindow window) window.TaskbarIcon.Dispose();
             Environment.Exit(0);
+        }
+
+        private void Lock()
+        {
+            OnRequestLock?.Invoke(this, EventArgs.Empty);
         }
         #endregion
     }

@@ -72,21 +72,19 @@
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Center"/>
 
-                        <controls:PlaceholderIconFieldControl Placeholder="Password"
-                                                              CornerRadius="{DynamicResource SecondaryCornerRadius}"
-                                                              FontFamily="{StaticResource Password}"
-                                                              Icon="{DynamicResource LockIcon}"
-                                                              Text="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                              MaxLength="300"/>
+                        <controls:PasswordBoxControl Placeholder="Password"
+                                                     CornerRadius="{DynamicResource SecondaryCornerRadius}"
+                                                     Icon="{DynamicResource LockIcon}"
+                                                     Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                     MaxLength="300"/>
 
-                        <controls:PlaceholderIconFieldControl Placeholder="Repeat"
-                                                              Visibility="{Binding ConfirmPasswordVisibility}"
-                                                              FontFamily="{StaticResource Password}"
-                                                              Margin="0 15 0 0"
-                                                              CornerRadius="{DynamicResource SecondaryCornerRadius}"
-                                                              Icon="{DynamicResource LockIcon}"
-                                                              Text="{Binding ConfirmPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                              MaxLength="300"/>
+                        <controls:PasswordBoxControl Placeholder="Repeat the password"
+                                                     CornerRadius="{DynamicResource SecondaryCornerRadius}"
+                                                     Icon="{DynamicResource LockIcon}"
+                                                     Password="{Binding ConfirmPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                     MaxLength="300"
+                                                     Visibility="{Binding ConfirmPasswordVisibility}"
+                                                     Margin="0 15 0 0"/>
 
                         <Button Style="{DynamicResource FlatButton}" 
                                 Margin="0 15 0 10"
