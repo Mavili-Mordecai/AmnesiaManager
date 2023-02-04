@@ -89,6 +89,21 @@ namespace AmnesiaManager.Views.Controls
                 new PropertyMetadata(50)
             );
         #endregion
+
+        #region FontSizePassword
+        public int FontSizePassword
+        {
+            get => (int)GetValue(FontSizePasswordProperty);
+            set => SetValue(FontSizePasswordProperty, value);
+        }
+
+        public static readonly DependencyProperty FontSizePasswordProperty = DependencyProperty.Register(
+            nameof(FontSizePassword), 
+            typeof(int),
+            typeof(PasswordBoxControl),
+            new PropertyMetadata(8)
+        );
+        #endregion
         #endregion
 
         #region Constructor

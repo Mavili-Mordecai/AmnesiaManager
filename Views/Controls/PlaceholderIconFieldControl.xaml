@@ -31,7 +31,7 @@
                    Width="16"
                    Visibility="{Binding ElementName=UserControl, Path=Icon, Converter={StaticResource ImageSourceToVisibilityConverter}}"
                    Height="16"
-                   Margin="0 0 15 0"/>
+                   Margin="0 0 10 0"/>
 
             <Grid Grid.Column="1">
                 <TextBox Text="{Binding ElementName=UserControl, Path=Text, UpdateSourceTrigger=PropertyChanged}"

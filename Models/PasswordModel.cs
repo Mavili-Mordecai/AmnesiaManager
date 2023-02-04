@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using AmnesiaManager.Repository;
 using AmnesiaManager.Security.EncryptedValue;
@@ -21,6 +22,9 @@ namespace AmnesiaManager.Models
         // TODO: Need to put these commands in the ViewModel
         [JsonIgnore] public DelegateCommand RemoveCommand { get; }
         [JsonIgnore] public DelegateCommand EditCommand { get; }
+        [JsonIgnore] public DelegateCommand CopyLabelCommand { get; }
+        [JsonIgnore] public DelegateCommand CopyLoginCommand { get; }
+        [JsonIgnore] public DelegateCommand CopyPasswordCommand { get; }
         #endregion
         #endregion
 
@@ -48,6 +52,10 @@ namespace AmnesiaManager.Models
                     }) return;
                 viewModel.EditPassword(this);
             });
+
+            CopyLabelCommand = new DelegateCommand(() => { Copy(Label); });
+            CopyLoginCommand = new DelegateCommand(() => { Copy(Login); });
+            CopyPasswordCommand = new DelegateCommand(() => { Copy(Password.Value); });
         }
         #endregion
 
@@ -55,6 +63,21 @@ namespace AmnesiaManager.Models
         public void Dispose()
         {
             Password.Clear();
+        }
+        #endregion
+
+        #region Private Methods
+        private void Copy(string? text)
+        {
+            if (string.IsNullOrWhiteSpace(text)) return;
+            try
+            {
+                Clipboard.SetDataObject(text);
+            }
+            catch (Exception)
+            {
+                // TODO: Log this
+            }
         }
         #endregion
     }
