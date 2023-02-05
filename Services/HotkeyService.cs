@@ -14,30 +14,34 @@ namespace AmnesiaManager.Services
     /// </summary>
     public static class HotkeyService
     {
+        #region Properties and fields
         // Events
-
-        public delegate void HotkeyEvent(GlobalHotkey hotkey);
+        public delegate void HotkeyEventHandler(GlobalHotkey hotkey);
 
         /// <summary>
         /// Fired when a hotkey is fired (duh lol).
         /// </summary>
-        public static event HotkeyEvent? HotkeyFired;
+        public static event HotkeyEventHandler? HotkeyFired;
 
         // Callbacks
-
         private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
-
         private static readonly LowLevelKeyboardProc LowLevelProc = HookCallback;
 
-        // All of the Hotkeys
+        /// <summary>
+        /// All of the Hotkeys 
+        /// </summary>
         private static List<GlobalHotkey> Hotkeys { get; set; }
 
-        // The build in proc ID for telling windows to hook onto the
-        // low level keyboard events with the SetWindowsHookEx function
+        /// <summary>
+        /// The build in proc ID for telling windows to hook onto the
+        /// low level keyboard events with the SetWindowsHookEx function
+        /// </summary>
         private const int WH_KEYBOARD_LL = 13;
 
-        // The system hook ID (for storing this application's hook)
-        private static IntPtr HookID = IntPtr.Zero;
+        /// <summary>
+        /// The system hook ID (for storing this application's hook)
+        /// </summary>
+        private static IntPtr _hookId = IntPtr.Zero;
 
         /// <summary>
         /// States whether the system keyboard event hook is setup. 
@@ -55,19 +59,23 @@ namespace AmnesiaManager.Services
         /// </para>
         /// </summary>
         public static bool RequiresModifierKey { get; set; }
+        #endregion
 
+        #region Constructor
         static HotkeyService()
         {
             Hotkeys = new List<GlobalHotkey>();
             RequiresModifierKey = true;
         }
+        #endregion
 
+        #region Public Methods
         /// <summary>
         /// Hooks/Sets up this application for receiving keydown callbacks
         /// </summary>
         public static void SetupSystemHook()
         {
-            HookID = SetHook(LowLevelProc);
+            _hookId = SetHook(LowLevelProc);
             IsHookSetup = true;
         }
 
@@ -76,7 +84,7 @@ namespace AmnesiaManager.Services
         /// </summary>
         public static void ShutdownSystemHook()
         {
-            UnhookWindowsHookEx(HookID);
+            UnhookWindowsHookEx(_hookId);
             IsHookSetup = false;
         }
 
@@ -98,43 +106,14 @@ namespace AmnesiaManager.Services
         }
 
         /// <summary>
-        /// Checks if there are any modifiers are pressed. If so, it checks through every
-        /// Hotkey and matches their Modifier/Key. If they both match, and the hotkey allows
-        /// the callback method to be called, it is called.
-        /// </summary>
-        private static void CheckHotkeys()
-        {
-            if (RequiresModifierKey && Keyboard.Modifiers == ModifierKeys.None) return;
-
-            var hotkeys = new List<GlobalHotkey>();
-            foreach (var hotkey in Hotkeys.Where(hotkey => hotkey.CanExecute && Keyboard.IsKeyDown(hotkey.Key)))
-            {
-                if (hotkey.Modifiers.Count > 0) {
-                    var hotkeyModifiers = hotkey.Modifiers.First();
-
-                    for (var i = 1; i < hotkey.Modifiers.Count; i++) hotkeyModifiers |= hotkey.Modifiers[i];
-                    if (Keyboard.Modifiers != hotkeyModifiers) continue;
-                }
-
-                hotkeys.Add(hotkey);
-            }
-
-            foreach (var hotkey in hotkeys)
-            {
-                hotkey.Callback?.Invoke();
-                HotkeyFired?.Invoke(hotkey);
-            }
-        }
-
-        /// <summary>
         /// Finds and returns all hotkeys in the hotkeys list that have matching modifiers and keys given
         /// </summary>
         /// <param name="modifier"></param>
         /// <param name="key"></param>
         /// <returns></returns>
-        public static List<GlobalHotkey> FindHotkeys(List<ModifierKeys> modifier, Key key) 
+        public static List<GlobalHotkey> FindHotkeys(List<ModifierKeys> modifier, Key key)
             => Hotkeys.Where(hotkey => hotkey.Key == key && hotkey.Modifiers == modifier).ToList();
-        
+
         /// <summary>
         /// Creates and adds a new hotkey to the hotkeys list.
         /// </summary>
@@ -149,35 +128,65 @@ namespace AmnesiaManager.Services
 
         /// <summary>
         /// Removes a or all hotkey from the hotkeys list (depending on 
-        /// <paramref name="removeAllOccourances"/>) by going through every hotkey 
+        /// <paramref name="removeAllOccurrences"/>) by going through every hotkey 
         /// and checking it's modifier and key to see if they match. is so, it removes it.
         /// </summary>
-        /// <param name="modifier"></param>
+        /// <param name="modifiers"></param>
         /// <param name="key"></param>
-        /// <param name="removeAllOccourances">
+        /// <param name="removeAllOccurrences">
         /// If this is false, the first found hotkey will be removed. 
         /// else, every occourance will be removed.
         /// </param>
-        public static void RemoveHotkey(List<ModifierKeys> modifiers, Key key, bool removeAllOccourances = false)
+        public static void RemoveHotkey(List<ModifierKeys> modifiers, Key key, bool removeAllOccurrences = false)
         {
             var originalHotkeys = Hotkeys;
             var toBeRemoved = FindHotkeys(modifiers, key);
 
-            if (toBeRemoved.Count > 0)
+            if (toBeRemoved.Count <= 0) return;
+            if (removeAllOccurrences)
             {
-                if (removeAllOccourances)
+                foreach (var hotkey in toBeRemoved)
                 {
-                    foreach (var hotkey in toBeRemoved)
-                    {
-                        originalHotkeys.Remove(hotkey);
-                    }
+                    originalHotkeys.Remove(hotkey);
+                }
 
-                    Hotkeys = originalHotkeys;
-                }
-                else
+                Hotkeys = originalHotkeys;
+            }
+            else
+            {
+                RemoveHotkey(toBeRemoved[0]);
+            }
+        }
+        #endregion
+
+        #region Private Methods
+        /// <summary>
+        /// Checks if there are any modifiers are pressed. If so, it checks through every
+        /// Hotkey and matches their Modifier/Key. If they both match, and the hotkey allows
+        /// the callback method to be called, it is called.
+        /// </summary>
+        private static void CheckHotkeys()
+        {
+            if (RequiresModifierKey && Keyboard.Modifiers == ModifierKeys.None) return;
+
+            var hotkeys = new List<GlobalHotkey>();
+            foreach (var hotkey in Hotkeys.Where(hotkey => hotkey.CanExecute && Keyboard.IsKeyDown(hotkey.Key)))
+            {
+                if (hotkey.Modifiers.Count > 0)
                 {
-                    RemoveHotkey(toBeRemoved[0]);
+                    var hotkeyModifiers = hotkey.Modifiers.First();
+
+                    for (var i = 1; i < hotkey.Modifiers.Count; i++) hotkeyModifiers |= hotkey.Modifiers[i];
+                    if (Keyboard.Modifiers != hotkeyModifiers) continue;
                 }
+
+                hotkeys.Add(hotkey);
+            }
+
+            foreach (var hotkey in hotkeys)
+            {
+                hotkey.Callback?.Invoke();
+                HotkeyFired?.Invoke(hotkey);
             }
         }
 
@@ -210,15 +219,16 @@ namespace AmnesiaManager.Services
 
                 // Cannot use System.Windows' keys because
                 // they don't use the same values as windows
-                //int vkCode = Marshal.ReadInt32(lParam);
-                //System.Windows.Forms.Keys key = (System.Windows.Forms.Keys)vkCode;
-                //Debug.WriteLine(key);
+                // int vkCode = Marshal.ReadInt32(lParam);
+                // System.Windows.Forms.Keys key = (System.Windows.Forms.Keys)vkCode;
+                // Debug.WriteLine(key);
             }
 
             // I think this tells windows that this app has successfully
             // handled the key events and now other apps can handle it next.
-            return CallNextHookEx(HookID, nCode, wParam, lParam);
+            return CallNextHookEx(_hookId, nCode, wParam, lParam);
         }
+        #endregion
 
         #region Native Methods
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
