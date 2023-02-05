@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Input;
 
 namespace AmnesiaManager.Models
@@ -13,8 +14,8 @@ namespace AmnesiaManager.Models
         /// <summary>
         /// The modifier key required to be pressed for the hotkey to be 
         /// </summary>
-        public ModifierKeys Modifier { get; set; }
-
+        public List<ModifierKeys> Modifiers { get; set; }
+        
         /// <summary>
         /// The key required to be pressed for the hotkey to be fired
         /// </summary>
@@ -36,16 +37,16 @@ namespace AmnesiaManager.Models
         /// Initiates a new hotkey with the given modifier, key, callback method, 
         /// and also a boolean stating if the callback can be run (can be changed, see <see cref="CanExecute"/>)
         /// </summary>
-        /// <param name="modifier">The modifier key required to be pressed</param>
+        /// <param name="modifiers">The modifier key required to be pressed</param>
         /// <param name="key">The key required to be pressed</param>
         /// <param name="callbackMethod">The method that gets called when the hotkey is fired</param>
         /// <param name="canExecute">
         /// States whether the callback can be run 
         /// (can be changed, see <see cref="CanExecute"/>)
         /// </param>
-        public GlobalHotkey(ModifierKeys modifier, Key key, Action callbackMethod, bool canExecute = true)
+        public GlobalHotkey(List<ModifierKeys> modifiers, Key key, Action callbackMethod, bool canExecute = true)
         {
-            this.Modifier = modifier;
+            this.Modifiers = modifiers;
             this.Key = key;
             this.Callback = callbackMethod;
             this.CanExecute = canExecute;

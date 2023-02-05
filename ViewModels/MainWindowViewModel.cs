@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -44,20 +45,6 @@ namespace AmnesiaManager.ViewModels
             LockTheAppCommand = new DelegateCommand(Lock);
 
             CurrentPage = _pageFactory.Get(PageType.PasswordList);
-            
-            HotkeyService.SetupSystemHook();
-            HotkeyService.AddHotkey(
-                new GlobalHotkey(
-                    ModifierKeys.Alt, 
-                    Key.P,
-                    () =>
-                    {
-                        if (
-                            Application.Current.MainWindow is MainWindow window
-                        ) window.ToggleWindow(this, new RoutedEventArgs());
-                    }
-                )
-            );
         }
         #endregion
 

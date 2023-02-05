@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using AmnesiaManager.Models;
 using AmnesiaManager.Security;
+using AmnesiaManager.Security.EncryptedValue;
 using AmnesiaManager.Services;
 using Newtonsoft.Json;
 
@@ -99,10 +100,13 @@ namespace AmnesiaManager.Repository
         #endregion
 
         #region Private Methods
-        private bool WriteInFile(List<PasswordModel>? items)
+        private bool WriteInFile(List<PasswordModel>? items, EncryptedString? encryptionKey = null)
         {
+            encryptionKey ??= UserService.Current.EncryptionKey;
+
             if (
-                UserService.Current.EncryptionKey.IsEmpty ||
+                encryptionKey == null ||
+                encryptionKey.IsEmpty ||
                 Product.GetApplicationDirectory() is not { } applicationDirectory
             ) return false;
 
@@ -115,7 +119,7 @@ namespace AmnesiaManager.Repository
                 };
 
                 var content = JsonConvert.SerializeObject(storageModel);
-                var bytes = SymmetricEncryptor.EncryptString(content, UserService.Current.EncryptionKey.Value);
+                var bytes = SymmetricEncryptor.EncryptString(content, encryptionKey.Value);
                 File.WriteAllBytes($@"{applicationDirectory}\{FileName}", bytes);
                 return true;
             }

@@ -104,11 +104,21 @@ namespace AmnesiaManager.Services
         /// </summary>
         private static void CheckHotkeys()
         {
-            var hotkeys = Hotkeys
-                .Where(hotkey => Keyboard.Modifiers == hotkey.Modifier && Keyboard.IsKeyDown(hotkey.Key))
-                .Where(hotkey => hotkey.CanExecute);
-
             if (RequiresModifierKey && Keyboard.Modifiers == ModifierKeys.None) return;
+
+            var hotkeys = new List<GlobalHotkey>();
+            foreach (var hotkey in Hotkeys.Where(hotkey => hotkey.CanExecute && Keyboard.IsKeyDown(hotkey.Key)))
+            {
+                if (hotkey.Modifiers.Count > 0) {
+                    var hotkeyModifiers = hotkey.Modifiers.First();
+
+                    for (var i = 1; i < hotkey.Modifiers.Count; i++) hotkeyModifiers |= hotkey.Modifiers[i];
+                    if (Keyboard.Modifiers != hotkeyModifiers) continue;
+                }
+
+                hotkeys.Add(hotkey);
+            }
+
             foreach (var hotkey in hotkeys)
             {
                 hotkey.Callback?.Invoke();
@@ -122,26 +132,19 @@ namespace AmnesiaManager.Services
         /// <param name="modifier"></param>
         /// <param name="key"></param>
         /// <returns></returns>
-        public static List<GlobalHotkey> FindHotkeys(ModifierKeys modifier, Key key)
-        {
-            var hotkeys = new List<GlobalHotkey>();
-            foreach (var hotkey in Hotkeys)
-                if (hotkey.Key == key && hotkey.Modifier == modifier)
-                    hotkeys.Add(hotkey);
-
-            return hotkeys;
-        }
-
+        public static List<GlobalHotkey> FindHotkeys(List<ModifierKeys> modifier, Key key) 
+            => Hotkeys.Where(hotkey => hotkey.Key == key && hotkey.Modifiers == modifier).ToList();
+        
         /// <summary>
         /// Creates and adds a new hotkey to the hotkeys list.
         /// </summary>
-        /// <param name="modifier">The modifier key. ALT Does not work.</param>
+        /// <param name="modifiers">The modifier key. ALT Does not work.</param>
         /// <param name="key"></param>
         /// <param name="callbackMethod"></param>
         /// <param name="canExecute"></param>
-        public static void AddHotkey(ModifierKeys modifier, Key key, Action callbackMethod, bool canExecute = true)
+        public static void AddHotkey(List<ModifierKeys> modifiers, Key key, Action callbackMethod, bool canExecute = true)
         {
-            AddHotkey(new GlobalHotkey(modifier, key, callbackMethod, canExecute));
+            AddHotkey(new GlobalHotkey(modifiers, key, callbackMethod, canExecute));
         }
 
         /// <summary>
@@ -155,10 +158,10 @@ namespace AmnesiaManager.Services
         /// If this is false, the first found hotkey will be removed. 
         /// else, every occourance will be removed.
         /// </param>
-        public static void RemoveHotkey(ModifierKeys modifier, Key key, bool removeAllOccourances = false)
+        public static void RemoveHotkey(List<ModifierKeys> modifiers, Key key, bool removeAllOccourances = false)
         {
             var originalHotkeys = Hotkeys;
-            var toBeRemoved = FindHotkeys(modifier, key);
+            var toBeRemoved = FindHotkeys(modifiers, key);
 
             if (toBeRemoved.Count > 0)
             {
