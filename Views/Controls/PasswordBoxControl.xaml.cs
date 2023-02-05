@@ -112,6 +112,8 @@ namespace AmnesiaManager.Views.Controls
             InitializeComponent();
         }
         #endregion
+
+        #region Private Methods
         private void PasswordChanged(object sender, RoutedEventArgs e)
         {
             Password = ((PasswordBox)sender).Password;
@@ -119,5 +121,6 @@ namespace AmnesiaManager.Views.Controls
                 ? TextSource.Foreground
                 : System.Windows.Media.Brushes.Transparent;
         }
+        #endregion
     }
 }
