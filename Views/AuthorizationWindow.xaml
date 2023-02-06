@@ -101,19 +101,26 @@
                     </StackPanel>
 
                     <StackPanel Grid.Row="2"
-                                Orientation="Horizontal"
                                 VerticalAlignment="Bottom"
                                 HorizontalAlignment="Center">
-                        <TextBlock Text="Developed by"
-                                   FontSize="11"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Developed by"
+                                       FontSize="11"/>
 
-                        <controls:HyperlinkControl Text="Mavili"
-                                                   FontSize="11"
-                                                   Margin="3 0 0 0"
-                                                   Foreground="{DynamicResource LightBlueColorBrush}"
-                                                   FontFamily="{DynamicResource Inter}"
-                                                   Url="https://github.com/Mavili-Mordecai"/>
+                            <controls:HyperlinkControl Text="Mavili"
+                                                       FontSize="11"
+                                                       Margin="3 0 0 0"
+                                                       Foreground="{DynamicResource LightBlueColorBrush}"
+                                                       FontFamily="{DynamicResource Inter}"
+                                                       Url="https://github.com/Mavili-Mordecai"/>
+                        </StackPanel>
+
+                        <TextBlock Text="{Binding Version, StringFormat={}version: {0}}"
+                                   TextAlignment="Center"
+                                   Margin="0 5 0 0"
+                                   FontSize="9"/>
                     </StackPanel>
+
                 </Grid>
             </Border>
         </Canvas>

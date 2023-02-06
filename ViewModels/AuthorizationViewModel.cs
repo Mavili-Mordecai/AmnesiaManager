@@ -17,6 +17,7 @@ namespace AmnesiaManager.ViewModels
         public string Password { get; set; } = Empty;
         public string ConfirmPassword { get; set; } = Empty;
         public string ApplicationName => Product.Name;
+        public string Version => Product.GetVersion() ?? "N/A";
 
         public Visibility ConfirmPasswordVisibility { get; set; }
 
