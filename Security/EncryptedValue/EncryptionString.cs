@@ -13,8 +13,8 @@ namespace AmnesiaManager.Security.EncryptedValue
         #endregion
 
         #region Constructor
-        public EncryptedString(byte[] entropy, Encoding? encoding = null, DataProtectionScope scope = DataProtectionScope.CurrentUser)
-            : base(entropy, scope)
+        public EncryptedString(Encoding? encoding = null, DataProtectionScope scope = DataProtectionScope.CurrentUser)
+            : base(scope)
         {
             _encoding = encoding ?? Encoding.UTF8;
         }

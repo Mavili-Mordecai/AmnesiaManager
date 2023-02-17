@@ -96,10 +96,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Security\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="Resources\Icons\keys.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>

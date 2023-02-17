@@ -87,7 +87,7 @@ namespace AmnesiaManager.ViewModels
             }
 
             // Creation mode
-            var password = new PasswordModel(new EncryptedString(Entropy.Generate()) { Value = Password}) 
+            var password = new PasswordModel(new EncryptedString { Value = Password}) 
             { 
                 Label = Label,
                 Login = Login

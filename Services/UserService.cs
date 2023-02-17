@@ -7,7 +7,7 @@ namespace AmnesiaManager.Services
     {
         #region Public Properties
         public bool IsLogged { get; set; } = false;
-        public EncryptedString EncryptionKey { get; set; } = new(Entropy.Generate(64));
+        public EncryptedString EncryptionKey { get; set; } = new();
         #endregion
 
         #region Singletone
