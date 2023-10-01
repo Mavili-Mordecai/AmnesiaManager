@@ -10,23 +10,23 @@
         mc:Ignorable="d"
         AllowsTransparency="True"
         Topmost="True"
-        Title="Authorization" 
+        Title="Authorization"
         Loaded="OnLoaded"
         Style="{StaticResource MainWindow}">
     <Window.DataContext>
-        <viewModels:AuthorizationViewModel/>
+        <viewModels:AuthorizationViewModel />
     </Window.DataContext>
 
     <Grid>
         <tb:TaskbarIcon x:Name="TaskbarIcon"
-                        Visibility="Visible" 
-                        ToolTipText="{Binding ApplicationName}" 
+                        Visibility="Visible"
+                        ToolTipText="{Binding ApplicationName}"
                         IconSource="/Resources/Icons/keys.ico"
                         TrayLeftMouseDown="ToggleWindow">
             <tb:TaskbarIcon.ContextMenu>
                 <ContextMenu Style="{DynamicResource ContextMenu}">
                     <MenuItem Header="Закрыть"
-                              Command="{Binding ExitCommand}"/>
+                              Command="{Binding ExitCommand}" />
                 </ContextMenu>
             </tb:TaskbarIcon.ContextMenu>
         </tb:TaskbarIcon>
@@ -39,44 +39,53 @@
                     Width="{StaticResource MainWindowWidth}"
                     Canvas.Right="0"
                     Canvas.Top="0"
-                    Padding="0"
+                    Padding="20 10"
                     ClipToBounds="True">
-                <Grid Margin="50 0 50 15">
+                <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="3*"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
-                    <StackPanel Grid.Row="0"
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Title -->
+                    <StackPanel Grid.ColumnSpan="2"
                                 Orientation="Horizontal"
                                 VerticalAlignment="Center"
                                 HorizontalAlignment="Center">
                         <Image Source="{DynamicResource ClosedLockIcon}"
                                Width="15"
                                Height="15"
-                               Margin="0 0 10 8"/>
+                               Margin="0 0 10 8" />
 
                         <TextBlock Text="{Binding ApplicationName}"
                                    FontSize="32"
                                    FontFamily="{StaticResource Dongle}"
-                                   VerticalAlignment="Center"/>
+                                   VerticalAlignment="Center" />
                     </StackPanel>
 
-                    <StackPanel Grid.Row="1"
+                    <!-- Authorization form -->
+                    <StackPanel Grid.Column="1"
+                                Grid.Row="1"
+                                Margin="0 15"
                                 VerticalAlignment="Stretch"
                                 HorizontalAlignment="Stretch">
                         <TextBlock Text="{Binding Title, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                                    FontSize="28"
                                    FontFamily="{StaticResource Dongle}"
                                    VerticalAlignment="Center"
-                                   HorizontalAlignment="Center"/>
+                                   HorizontalAlignment="Center" />
 
                         <controls:PasswordBoxControl Placeholder="Password"
                                                      CornerRadius="{DynamicResource SecondaryCornerRadius}"
                                                      Icon="{DynamicResource LockIcon}"
                                                      Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                     MaxLength="300"/>
+                                                     MaxLength="300" />
 
                         <controls:PasswordBoxControl Placeholder="Repeat the password"
                                                      CornerRadius="{DynamicResource SecondaryCornerRadius}"
@@ -84,43 +93,56 @@
                                                      Password="{Binding ConfirmPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                      MaxLength="300"
                                                      Visibility="{Binding ConfirmPasswordVisibility}"
-                                                     Margin="0 15 0 0"/>
+                                                     Margin="0 15 0 0" />
 
-                        <Button Style="{DynamicResource FlatButton}" 
+                        <Button Style="{DynamicResource FlatButton}"
                                 Margin="0 15 0 10"
                                 IsDefault="True"
                                 Content="Sign in"
                                 Background="{DynamicResource LimeColorBrush}"
-                                Command="{Binding LoginCommand}"/>
+                                Command="{Binding LoginCommand}" />
 
                         <TextBlock Foreground="{DynamicResource RedColorBrush}"
                                    HorizontalAlignment="Center"
                                    FontSize="11"
                                    Visibility="{Binding FormError.Visibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                   Text="{Binding FormError.Message, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                   Text="{Binding FormError.Message, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </StackPanel>
 
-                    <StackPanel Grid.Row="2"
+                    <!-- Logo Icon -->
+                    <Image Grid.Column="0"
+                           Grid.Row="1"
+                           Margin="5 0"
+                           VerticalAlignment="Center"
+                           Source="{DynamicResource LogoIcon}"
+                           RenderTransformOrigin="0.5, 0.5">
+                        <Image.RenderTransform>
+                            <ScaleTransform ScaleX="-1"/>
+                        </Image.RenderTransform>
+                    </Image>
+
+                    <!-- Developer contribution -->
+                    <StackPanel Grid.Column="0"
+                                Grid.Row="2"
+                                Grid.ColumnSpan="2"
                                 VerticalAlignment="Bottom"
                                 HorizontalAlignment="Center">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Developed by"
-                                       FontSize="11"/>
+                                       FontSize="11" />
 
                             <controls:HyperlinkControl Text="Mavili"
                                                        FontSize="11"
                                                        Margin="3 0 0 0"
                                                        Foreground="{DynamicResource LightBlueColorBrush}"
                                                        FontFamily="{DynamicResource Inter}"
-                                                       Url="https://github.com/Mavili-Mordecai"/>
+                                                       Url="https://github.com/Mavili-Mordecai" />
                         </StackPanel>
 
                         <TextBlock Text="{Binding Version, StringFormat={}version: {0}}"
                                    TextAlignment="Center"
-                                   Margin="0 5 0 0"
-                                   FontSize="9"/>
+                                   FontSize="9" />
                     </StackPanel>
-
                 </Grid>
             </Border>
         </Canvas>

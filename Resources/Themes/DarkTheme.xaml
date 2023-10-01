@@ -23,4 +23,5 @@
     <BitmapImage x:Key="LeftArrowIcon" UriSource="/Resources/Icons/arrow-left/white.png"/>
     <BitmapImage x:Key="SearchIcon" UriSource="/Resources/Icons/search.png"/>
     <BitmapImage x:Key="LockIcon" UriSource="/Resources/Icons/lock.png"/>
+    <BitmapImage x:Key="LogoIcon" UriSource="/Resources/Icons/keys.png"/>
 </ResourceDictionary>

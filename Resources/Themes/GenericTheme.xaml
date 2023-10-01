@@ -6,7 +6,7 @@
     <FontFamily x:Key="Dongle">/Resources/Fonts/Dongle/#Dongle</FontFamily>
     <FontFamily x:Key="Password">/Resources/Fonts/#Password</FontFamily>
 
-    <system:Double x:Key="MainWindowWidth">300</system:Double>
+    <system:Double x:Key="MainWindowWidth">450</system:Double>
     <system:Double x:Key="MainWindowHeight">350</system:Double>
 
     <CornerRadius x:Key="PrimaryCornerRadius">20</CornerRadius>
