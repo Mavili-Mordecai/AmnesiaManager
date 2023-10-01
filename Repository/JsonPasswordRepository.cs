@@ -109,6 +109,12 @@ internal class JsonPasswordRepository : IRepository<PasswordModel>
         return WriteInFile(passwords);
     }
 
+    public bool ChangeEncryptionKey(EncryptedString key)
+    {
+        var passwords = GetAll();
+        return passwords != null && WriteInFile(passwords.ToList(), key);
+    }
+
     public bool MarkAsRegistered()
     {
         return WriteInFile(null);

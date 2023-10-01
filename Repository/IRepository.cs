@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using AmnesiaManager.Security.EncryptedValue;
 
 namespace AmnesiaManager.Repository
 {
@@ -9,6 +10,7 @@ namespace AmnesiaManager.Repository
         bool Update(T entity);
         bool Delete(T entity);
         bool IsExists();
+        bool ChangeEncryptionKey(EncryptedString key);
         bool MarkAsRegistered();
     }
 }

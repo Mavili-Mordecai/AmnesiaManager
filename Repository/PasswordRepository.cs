@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AmnesiaManager.Models;
+using AmnesiaManager.Security.EncryptedValue;
 using AmnesiaManager.Security.EncryptionAlgorithms;
 
 namespace AmnesiaManager.Repository
@@ -64,6 +65,8 @@ namespace AmnesiaManager.Repository
             return true;
         }
 
+        public bool ChangeEncryptionKey(EncryptedString key) => _repository.ChangeEncryptionKey(key);
+        
         public bool MarkAsRegistered() => _repository.MarkAsRegistered();
 
         public bool IsExists() => _repository.IsExists();

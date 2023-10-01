@@ -12,7 +12,8 @@ namespace AmnesiaManager.ViewModels
 {
     internal class AuthorizationViewModel : ViewModelBase
     {
-        #region Public Properties
+        #region Properties and fields
+
         public string Title { get; set; }
         public string Password { get; set; } = Empty;
         public string ConfirmPassword { get; set; } = Empty;
@@ -23,21 +24,21 @@ namespace AmnesiaManager.ViewModels
 
         public Error FormError { get; set; } = new();
 
+        public event EventHandler? OnRequestClose;
+
+        private readonly bool _isRegistration;
+
+        #endregion
+
         #region Commands
+
         public DelegateCommand LoginCommand { get; set; }
         public DelegateCommand ExitCommand { get; }
-        #endregion
-        #endregion
 
-        #region Events
-        public event EventHandler? OnRequestClose;
-        #endregion
-
-        #region Private Fields
-        private readonly bool _isRegistration;
         #endregion
 
         #region Constructor
+
         public AuthorizationViewModel()
         {
             LoginCommand = new DelegateCommand(Login);
@@ -49,18 +50,20 @@ namespace AmnesiaManager.ViewModels
                 ? Visibility.Visible
                 : Visibility.Collapsed;
 
-            Title = _isRegistration 
+            Title = _isRegistration
                 ? "Registration"
                 : "Authorization";
         }
+
         #endregion
 
         #region Private Methods
+
         private void ResetForm()
         {
             Password = ConfirmPassword = Empty;
             FormError.Clear();
-        } 
+        }
 
         private bool ValidateForm()
         {
@@ -89,7 +92,7 @@ namespace AmnesiaManager.ViewModels
             {
                 if (PasswordRepository.Instance.MarkAsRegistered())
                 {
-                    GoToMainWindow();
+                    SwitchToMainWindow();
                     return;
                 }
 
@@ -103,10 +106,10 @@ namespace AmnesiaManager.ViewModels
                 return;
             }
 
-            GoToMainWindow();
+            SwitchToMainWindow();
         }
 
-        private void GoToMainWindow()
+        private void SwitchToMainWindow()
         {
             ResetForm();
 
@@ -121,6 +124,7 @@ namespace AmnesiaManager.ViewModels
             if (Application.Current.MainWindow is AuthorizationWindow window) window.TaskbarIcon.Dispose();
             Environment.Exit(0);
         }
+
         #endregion
     }
 }

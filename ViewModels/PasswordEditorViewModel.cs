@@ -11,6 +11,7 @@ namespace AmnesiaManager.ViewModels
     internal class PasswordEditorViewModel : ViewModelBase
     {
         #region Public Properties
+
         public string Label
         {
             get => GetProperty(() => Label);
@@ -36,16 +37,22 @@ namespace AmnesiaManager.ViewModels
         }
 
         #region Commands
+
         public DelegateCommand SaveCommand { get; }
         public DelegateCommand CancelCommand { get; }
+
         #endregion
+
         #endregion
 
         #region Private Fields
+
         public PasswordModel? EditablePassword { get; set; }
+
         #endregion
 
         #region Constructor
+
         public PasswordEditorViewModel()
         {
             Label = string.Empty;
@@ -56,19 +63,23 @@ namespace AmnesiaManager.ViewModels
             CancelCommand = new DelegateCommand(ClearAndExit);
             SaveCommand = new DelegateCommand(Save);
         }
+
         #endregion
 
         #region Public Methods
+
         public void SetEditablePassword(PasswordModel? editablePassword)
-        { 
+        {
             EditablePassword = editablePassword;
             Label = EditablePassword?.Label ?? string.Empty;
             Login = EditablePassword?.Login ?? string.Empty;
             Password = EditablePassword?.Password.Value ?? string.Empty;
         }
+
         #endregion
 
         #region Private Methods
+
         private void Save()
         {
             if (!ValidateForm()) return;
@@ -80,15 +91,16 @@ namespace AmnesiaManager.ViewModels
                 EditablePassword.Login = Login;
                 EditablePassword.Password.Value = Password;
 
-                if (!PasswordRepository.Instance.Update(EditablePassword)) FormError.Message = "Failed to save password!";
+                if (!PasswordRepository.Instance.Update(EditablePassword))
+                    FormError.Message = "Failed to save password!";
                 else ClearAndExit();
-                
+
                 return;
             }
 
             // Creation mode
-            var password = new PasswordModel(new EncryptedString { Value = Password}) 
-            { 
+            var password = new PasswordModel(new EncryptedString { Value = Password })
+            {
                 Label = Label,
                 Login = Login
             };
@@ -118,10 +130,10 @@ namespace AmnesiaManager.ViewModels
 
             FormError.Message = "It is necessary to fill in all the fields!";
             return false;
-
         }
 
         private void ResetForm() => Label = Login = Password = string.Empty;
+
         #endregion
     }
 }

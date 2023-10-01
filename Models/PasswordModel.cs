@@ -62,7 +62,7 @@ namespace AmnesiaManager.Models
         #region Public Methods
         public void Dispose()
         {
-            Password.Clear();
+            Password.Dispose();
         }
         #endregion
 

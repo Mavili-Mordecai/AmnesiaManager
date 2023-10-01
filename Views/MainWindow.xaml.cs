@@ -2,7 +2,9 @@
 using System;
 using System.ComponentModel;
 using System.Windows;
+using AmnesiaManager.Services;
 using AmnesiaManager.ViewModels;
+using Microsoft.VisualBasic.ApplicationServices;
 
 namespace AmnesiaManager.Views
 {
@@ -11,18 +13,19 @@ namespace AmnesiaManager.Views
     /// </summary>
     public partial class MainWindow : Window
     {
-        #region Public Fields
+        #region Properties and fields
+
         public static int Offset => 15;
         public bool IsAnimating;
-        #endregion
 
-        #region Private Fields
         private bool _isOpened;
         private bool _isNeedToClose;
         private MainWindowViewModel? _viewModel;
+
         #endregion
 
         #region Constructor
+
         public MainWindow()
         {
             InitializeComponent();
@@ -33,15 +36,17 @@ namespace AmnesiaManager.Views
 
             ShowInTaskbar = false;
         }
+
         #endregion
 
         #region Override Methods
+
         protected override void OnClosing(CancelEventArgs e)
         {
             e.Cancel = !_isNeedToClose;
-            
+
             if (!e.Cancel && !TaskbarIcon.IsDisposed) TaskbarIcon.Dispose();
-            
+
             base.OnClosing(e);
         }
 
@@ -57,9 +62,11 @@ namespace AmnesiaManager.Views
                 _isOpened = true;
             });
         }
+
         #endregion
 
         #region Public Methods
+
         public void ToggleWindow(object sender, RoutedEventArgs? e)
         {
             //if (IsAnimating) return;
@@ -73,9 +80,11 @@ namespace AmnesiaManager.Views
                 AnimationHide();
             }
         }
+
         #endregion
 
         #region Private Methods
+
         private void AnimationHide(EventHandler? completed = null)
         {
             if (!_isOpened || IsAnimating) return;
@@ -97,14 +106,17 @@ namespace AmnesiaManager.Views
             _viewModel = DataContext as MainWindowViewModel;
             if (_viewModel == null) return;
 
-            _viewModel.OnRequestLock += (o, args) =>
-            {
-                Application.Current.MainWindow = new AuthorizationWindow();
-                _isNeedToClose = true;
+            _viewModel.OnRequestLock += OnLock;
+        }
 
-                AnimationHide((s, e) => { Close(); });
-            };
-        }        
+        private void OnLock(object? sender, EventArgs args)
+        {
+            Application.Current.MainWindow = new AuthorizationWindow();
+            UserService.Current.EncryptionKey.Clear();
+            _isNeedToClose = true;
+            AnimationHide((_, _) => { Close(); });
+        }
+
         #endregion
     }
 }
