@@ -43,22 +43,7 @@ namespace AmnesiaManager.Models
 
         public static string? GetApplicationDirectory()
         {
-            var appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            var appDirPath = appDataPath + $"\\{Name}";
-
-            if (Directory.Exists(appDirPath)) return appDirPath;
-
-            try
-            {
-                Directory.CreateDirectory(appDirPath);
-            }
-            catch (UnauthorizedAccessException)
-            {
-                // TODO: Log this exception
-                return null;
-            }
-
-            return appDirPath;
+            return Environment.CurrentDirectory;
         }
     }
 }
